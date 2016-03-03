@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+    <script src="users.json"></script>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        font-family: sans-serif;
+        padding: 40px;
+        color: #555;
+      }
+      h3 {
+        margin-bottom: 15px;
+      }
+      .user {
+        padding: 20px;
+        background: #eee;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+  </body>
+
+
+
+<script type="text/jsx">
+
+
+
+
+const Content = React.createClass({
+
+  renderUsers() {
+    const userList = JSON.parse(userData);
+
+    const reorderedList = userList.sort((a, b) => {
+      return b.won - a.won;
+    });
+
+    const users = reorderedList.map((user) => {
+      const winRatio = Math.round(user.won / user.played * 100 * 10) / 10;
+      return <div className="user">
+        <div className="name">{user.name}</div>
+        <div className="winnings">{`Won: ${user.won} of ${user.played} (${winRatio}%)`}</div>
+      </div>
+    });
+
+    return users;
+  },
+  renderGamesPlayed() {
+    const gamesPlayedList = JSON.parse(gamesPlayedData);
+
+    const gamesPlayed = gamesPlayedList.map((play) => {
+      return play.gameName
+    });
+  },
+  render() {
+    return <div>
+      <h3>Leaderboard</h3>
+      {this.renderUsers()}
+      <h3>Games played</h3>
+      {this.renderGamesPlayed()}
+    </div>
+  }
+
+});
+
+
+
+
+
+const element = React.createElement(Content);
+React.render(element, document.body);
+</script>
+</html>
