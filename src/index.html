@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        font-family: sans-serif;
+        padding: 40px 20px;
+        color: #555;
+      }
+      h3 {
+        margin-bottom: 15px;
+      }
+      .row {
+        padding: 10px 20px;
+        background: #eee;
+        margin-bottom: 10px;
+      }
+      .content {
+        display: flex;
+        width: 100%;
+      }
+
+      .col {
+        margin: 0 20px;
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+  </body>
+
+
+
+<script type="text/jsx">
+
+const usersList = [{
+  "id": "0001",
+  "name": "Phil"
+},{
+  "id": "0002",
+  "name": "Tully"
+},{
+  "id": "0003",
+  "name": "Dom"
+},{
+  "id": "0004",
+  "name": "Kelv"
+}]
+
+const eventsList = [{
+  "id": "0001",
+  "gameName": "Splendor",
+  "players": ["0001", "0003"],
+  "winner": "0001"
+},{
+  "id": "0002",
+  "gameName": "Machi Koro",
+  "players": ["0001", "0002", "0003"],
+  "winner": "0002"
+},{
+  "id": "0003",
+  "gameName": "Splendor",
+  "players": ["0004", "0002", "0003", "0001"],
+  "winner": "0002"
+},{
+  "id": "0004",
+  "gameName": "Splendor",
+  "players": ["0003", "0001", "0004"],
+  "winner": "0001"
+},{
+  "id": "0005",
+  "gameName": "Colt Express",
+  "players": ["0002", "0001", "0003", "0004"],
+  "winner": "0004"
+},{
+  "id": "0006",
+  "gameName": "Colt Express",
+  "players": ["0001", "0003", "0004"],
+  "winner": "0003"
+},{
+  "id": "0007",
+  "gameName": "Colt Express",
+  "players": ["0001", "0003", "0004", "0002"],
+  "winner": "0003"
+}];
+
+
+
+const Content = React.createClass({
+
+  // Cross reference an event's winner id with all users to get the winner name
+  renderWinner(event) {
+    const winnerName = usersList.map((winner) => {
+      if (winner.id === event.winner) {
+        return winner.name;
+      }
+    });
+    return winnerName;
+  },
+
+  // Simply render all the events highlighting the winner
+  renderEvents() {
+    const events = eventsList.map((event) => {
+    return <div className="row">
+      <div className="name">{event.id} {event.gameName} -  Winner: {this.renderWinner(event)}<br />
+        {event.players}
+      </div>
+    </div>
+    });
+    return events
+  },
+
+  // Which events a user has won
+  userWins(user) {
+    "use strict";
+    let wins = [];
+    eventsList.map((event) => {
+      if (event.winner === user.id) {
+        wins.push(event.gameName);
+      }
+    });
+    return wins;
+  },
+
+  // Calculate number of times in total played by a user
+  userTimesPlayed(user) {
+    "use strict";
+    let eventsPlayed = 0;
+    eventsList.map((event) => {
+      const eventPlayers = event.players;
+      if (eventPlayers.includes(user.id)) {
+        eventsPlayed += 1;
+      }
+    });
+    return eventsPlayed;
+  },
+
+  // Create list of events user is involved
+  userEventsPlayed(user) {
+    "use strict";
+    let eventsPlayed = [];
+    eventsList.map((event) => {
+      const eventPlayers = event.players;
+      if (eventPlayers.includes(user.id)) {
+        eventsPlayed.push(event.gameName)
+      }
+    });
+    return eventsPlayed;
+  },
+
+  // Get user's most successful event
+  userBestGame(user) {
+    const output = this.userEventsPlayed(user).reduce((min, cur) => {
+      console.log(this.userEventsPlayed(user))
+      console.log(this.userWins(user))
+    });
+    return output;
+  },
+
+  // Calculate percentage win ratio of a user
+  userWinRatio(user) {
+    return Math.round(this.userWins(user).length / this.userTimesPlayed(user) * 100 * 10) / 10;
+  },
+
+  // Render a user's stats
+  renderUser(user) {
+    return <div className="row">
+      {user.name} - Won {this.userWins(user).length} of {this.userTimesPlayed(user)} ({this.userWinRatio(user)}%)<br />
+      Most won: {this.userBestGame(user)}
+    </div>
+  },
+
+  // Render the users in order of users in descending order of win ratio
+  renderLeaderboard() {
+    const output = usersList.sort((a,b) => {
+      return this.userWinRatio(b) - this.userWinRatio(a);
+    }).map((user) => {
+      return <div>
+        {this.renderUser(user)}
+      </div>
+    })
+    return output;
+  },
+
+  // Show me the money
+  render() {
+    return <div className="content">
+      <div className="col">
+      <h3>Events</h3>
+      {this.renderEvents()}
+      </div>
+      <div className="col">
+        <h3>Leaderboard</h3>
+        {this.renderLeaderboard()}
+      </div>
+    </div>
+  }
+
+});
+
+
+
+
+
+const element = React.createElement(Content);
+React.render(element, document.body);
+</script>
+</html>

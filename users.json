@@ -1,3 +1,0 @@
-var userData = '[{"name": "Phil", "won": 10, "played": 33},{"name": "Tully", "won": 15, "played": 33},{"name": "Dom", "won": 8, "played": 33}]';
-
-var gamesPlayedData = '[{"gameName": "Machi Koro", "players": [{"gameName": "Phil"},{"name": "Dom"},{"name": "Tully"},{"name": "Phil"}], "winner": "Phil"}]';
