@@ -3,6 +3,7 @@
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js"></script>
     <style>
       * {
         padding: 0;
@@ -38,6 +39,7 @@
 
 
 <script type="text/jsx">
+"use strict";
 
 const usersList = [{
   "id": "0001",
@@ -57,7 +59,7 @@ const eventsList = [{
   "id": "0001",
   "gameName": "Splendor",
   "players": ["0001", "0003"],
-  "winner": "0001"
+  "winner": "0003"
 },{
   "id": "0002",
   "gameName": "Machi Koro",
@@ -71,13 +73,13 @@ const eventsList = [{
 },{
   "id": "0004",
   "gameName": "Splendor",
-  "players": ["0003", "0001", "0004"],
+  "players": ["0002", "0001"],
   "winner": "0001"
 },{
   "id": "0005",
   "gameName": "Colt Express",
-  "players": ["0002", "0001", "0003", "0004"],
-  "winner": "0004"
+  "players": ["0002", "0001", "0004"],
+  "winner": "0002"
 },{
   "id": "0006",
   "gameName": "Colt Express",
@@ -96,7 +98,7 @@ const Content = React.createClass({
 
   // Cross reference an event's winner id with all users to get the winner name
   renderWinner(event) {
-    const winnerName = usersList.map((winner) => {
+    const winnerName = usersList.map(winner => {
       if (winner.id === event.winner) {
         return winner.name;
       }
@@ -104,23 +106,35 @@ const Content = React.createClass({
     return winnerName;
   },
 
+  renderEventPlayers(event) {
+    let eventPlayers = [];
+    usersList.map(user => {
+      if (event.players.includes(user.id)) {
+        eventPlayers.push(user.name);
+      }
+    });
+    return eventPlayers;
+  },
+
   // Simply render all the events highlighting the winner
   renderEvents() {
-    const events = eventsList.map((event) => {
-    return <div className="row">
-      <div className="name">{event.id} {event.gameName} -  Winner: {this.renderWinner(event)}<br />
-        {event.players}
+    const events = eventsList.map(event => {
+      const displayEventUsers = this.renderEventPlayers(event).map(player => {
+        return `${player} `
+      });
+      return <div className="row">
+        <div className="name">{event.id} {event.gameName} -  Winner: {this.renderWinner(event)}<br />
+          {displayEventUsers}
+        </div>
       </div>
-    </div>
     });
     return events
   },
 
   // Which events a user has won
   userWins(user) {
-    "use strict";
     let wins = [];
-    eventsList.map((event) => {
+    eventsList.map(event => {
       if (event.winner === user.id) {
         wins.push(event.gameName);
       }
@@ -128,51 +142,133 @@ const Content = React.createClass({
     return wins;
   },
 
-  // Calculate number of times in total played by a user
-  userTimesPlayed(user) {
-    "use strict";
-    let eventsPlayed = 0;
-    eventsList.map((event) => {
-      const eventPlayers = event.players;
-      if (eventPlayers.includes(user.id)) {
-        eventsPlayed += 1;
-      }
-    });
-    return eventsPlayed;
-  },
-
-  // Create list of events user is involved
-  userEventsPlayed(user) {
-    "use strict";
+  // Which events a user has played
+  userEvents(user) {
     let eventsPlayed = [];
-    eventsList.map((event) => {
-      const eventPlayers = event.players;
-      if (eventPlayers.includes(user.id)) {
-        eventsPlayed.push(event.gameName)
+    eventsList.map(event => {
+      if (event.players.includes(user.id)) {
+        eventsPlayed.push(event.gameName);
       }
     });
     return eventsPlayed;
   },
 
   // Get user's most successful event
-  userBestGame(user) {
-    const output = this.userEventsPlayed(user).reduce((min, cur) => {
-      console.log(this.userEventsPlayed(user))
-      console.log(this.userWins(user))
-    });
-    return output;
+  userBestEvent(user) {
+
+    const list = this.userWins(user);
+
+    const mostWins = list.reduce((a, b, i, array) => {
+      let output = [];
+      if (array[i] === array[i-1]) {
+        output.push(array[i]);
+      } else {
+        output.push(array);
+      }
+      const flattened = output.reduce(function(a, b) {
+        return a.concat(b);
+      }, []);
+
+      return flattened;
+    },[]);
+
+    return mostWins;
+
+    // Create object of events and tally of times played
+    // const counts = {};
+    // for (var i = 0; i < this.userWins(user).length; i++) {
+    //   var num = this.userWins(user)[i];
+    //   counts[num] = counts[num] ? counts[num] + 1 : 1;
+    // }
+    //
+    // // Filter events to only show the most played (showing multiples if it's a tie)
+    // const topEvents = counts;
+    //
+    // // Get the name of the event(s)
+    // const namedEvents = [];
+    // Object.keys(topEvents).forEach(val => {
+    //   namedEvents.push(val);
+    // });
+    //
+    // console.log(topEvents)
+    // return _.isEmpty(topEvents) ? "no wins yet" : topEvents;
+
+
+
+    // const counts = this.userWins(user).reduce((a, b, i, array) => {
+    //   const find = _.find(a, ['name', array[i]]);
+    //   if (find) {
+    //     find.count += 1;
+    //     return a;
+    //   } else {
+    //     return a.concat({name: array[i], count: 1})
+    //   }
+    // }, []);
+    //
+    // console.dir(counts);
+    //
+    // counts.forEach(val => {
+    //   console.log(val.count)
+    // });
+
+    // const arr = [{name: "splendor", count:1},{name: "machi koro", count:2},{name: "splendor", count:1}];
+
+    // const mostCounts = counts.reduce((a,b) => {
+    //   let output = [];
+    //   if (a.count >= b.count) {
+    //     output.push(a.name);
+    //   } else {
+    //     output.push(b.name);
+    //   }
+    //   return output;
+    // }, []);
+
+
+
+
+    // console.log(y)
+
+    // console.dir(top)
+
+    // const counts = {};
+    // for (var i = 0; i < this.userWins(user).length; i++) {
+    //   var num = this.userWins(user)[i];
+    //   counts[num] = counts[num] ? counts[num] + 1 : 1;
+    // }
+
+
+    // return _.isEmpty(mostCounts) ? "no wins yet" : mostCounts;
+
+
+    // const sorted = _.sortBy(counts, function(o) {
+    //   return o;
+    // });
+    //
+    // console.log(sorted)
+
+
+    // const newList = {};
+    // for (var i = 0; i < sort.length; i++) {
+    //   var num = sort[i]
+    //   newList[num] = newList[num] ? newList[num] + 1 : 1;
+    // }
+    //
+    // console.log(newList)
+
+
+    // return top;
   },
 
   // Calculate percentage win ratio of a user
   userWinRatio(user) {
-    return Math.round(this.userWins(user).length / this.userTimesPlayed(user) * 100 * 10) / 10;
+    return Math.round(this.userWins(user).length / this.userEvents(user).length * 100 * 10) / 10;
   },
 
   // Render a user's stats
   renderUser(user) {
     return <div className="row">
-      {user.name} - Won {this.userWins(user).length} of {this.userTimesPlayed(user)} ({this.userWinRatio(user)}%)<br />
-      Most won: {this.userBestGame(user)}
+      {user.name} - Won {this.userWins(user).length} of {this.userEvents(user).length} ({this.userWinRatio(user)}%)<br />
+      Most wins: {this.userBestEvent(user)}
     </div>
   },
 
@@ -190,6 +286,7 @@ const Content = React.createClass({
 
   // Show me the money
   render() {
+
     return <div className="content">
       <div className="col">
       <h3>Events</h3>
