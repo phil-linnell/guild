@@ -165,36 +165,35 @@ const Content = React.createClass({
       } else {
         output.push(array);
       }
-      const flattened = output.reduce(function(a, b) {
+      const flattened = output.reduce((a, b) => {
         return a.concat(b);
       }, []);
 
       return flattened;
     },[]);
 
-    return mostWins;
+    return _.isEmpty(mostWins) ? "no wins yet" : mostWins;
 
+
+    // Original attempt with array like object
     // Create object of events and tally of times played
     // const counts = {};
     // for (var i = 0; i < this.userWins(user).length; i++) {
     //   var num = this.userWins(user)[i];
     //   counts[num] = counts[num] ? counts[num] + 1 : 1;
     // }
-    //
+
     // // Filter events to only show the most played (showing multiples if it's a tie)
     // const topEvents = counts;
-    //
+
     // // Get the name of the event(s)
     // const namedEvents = [];
     // Object.keys(topEvents).forEach(val => {
     //   namedEvents.push(val);
     // });
-    //
-    // console.log(topEvents)
-    // return _.isEmpty(topEvents) ? "no wins yet" : topEvents;
 
 
-
+    // Attempt with Ethel
     // const counts = this.userWins(user).reduce((a, b, i, array) => {
     //   const find = _.find(a, ['name', array[i]]);
     //   if (find) {
@@ -204,59 +203,8 @@ const Content = React.createClass({
     //     return a.concat({name: array[i], count: 1})
     //   }
     // }, []);
-    //
-    // console.dir(counts);
-    //
-    // counts.forEach(val => {
-    //   console.log(val.count)
-    // });
-
-    // const arr = [{name: "splendor", count:1},{name: "machi koro", count:2},{name: "splendor", count:1}];
-
-    // const mostCounts = counts.reduce((a,b) => {
-    //   let output = [];
-    //   if (a.count >= b.count) {
-    //     output.push(a.name);
-    //   } else {
-    //     output.push(b.name);
-    //   }
-    //   return output;
-    // }, []);
 
 
-
-
-    // console.log(y)
-
-    // console.dir(top)
-
-    // const counts = {};
-    // for (var i = 0; i < this.userWins(user).length; i++) {
-    //   var num = this.userWins(user)[i];
-    //   counts[num] = counts[num] ? counts[num] + 1 : 1;
-    // }
-
-
-    // return _.isEmpty(mostCounts) ? "no wins yet" : mostCounts;
-
-
-    // const sorted = _.sortBy(counts, function(o) {
-    //   return o;
-    // });
-    //
-    // console.log(sorted)
-
-
-    // const newList = {};
-    // for (var i = 0; i < sort.length; i++) {
-    //   var num = sort[i]
-    //   newList[num] = newList[num] ? newList[num] + 1 : 1;
-    // }
-    //
-    // console.log(newList)
-
-
-    // return top;
   },
 
   // Calculate percentage win ratio of a user
