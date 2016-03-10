@@ -1,37 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js"></script>
-    <style>
-      * {
-        padding: 0;
-        margin: 0;
-      }
-      body {
-        font-family: sans-serif;
-        padding: 40px 20px;
-        color: #555;
-      }
-      h3 {
-        margin-bottom: 15px;
-      }
-      .row {
-        padding: 10px 20px;
-        background: #eee;
-        margin-bottom: 10px;
-      }
-      .content {
-        display: flex;
-        width: 100%;
-      }
-
-      .col {
-        margin: 0 20px;
-        flex: 1;
-      }
-    </style>
+    <script src="../public/lib/JSXTransformer.js"></script>
+    <script src="../public/lib/react.js"></script>
+    <script src="../public/lib/lodash.min.js"></script>
+    <script src="data/db.js"></script>
+    <link rel="stylesheet" href="../public/stylesheets/styles.css">
   </head>
   <body>
   </body>
@@ -40,58 +14,6 @@
 
 <script type="text/jsx">
 "use strict";
-
-const usersList = [{
-  "id": "0001",
-  "name": "Phil"
-},{
-  "id": "0002",
-  "name": "Tully"
-},{
-  "id": "0003",
-  "name": "Dom"
-},{
-  "id": "0004",
-  "name": "Kelv"
-}]
-
-const eventsList = [{
-  "id": "0001",
-  "gameName": "Splendor",
-  "players": ["0001", "0003"],
-  "winner": "0003"
-},{
-  "id": "0002",
-  "gameName": "Machi Koro",
-  "players": ["0001", "0002", "0003"],
-  "winner": "0002"
-},{
-  "id": "0003",
-  "gameName": "Splendor",
-  "players": ["0004", "0002", "0003", "0001"],
-  "winner": "0002"
-},{
-  "id": "0004",
-  "gameName": "Splendor",
-  "players": ["0002", "0001"],
-  "winner": "0001"
-},{
-  "id": "0005",
-  "gameName": "Colt Express",
-  "players": ["0002", "0001", "0004"],
-  "winner": "0002"
-},{
-  "id": "0006",
-  "gameName": "Colt Express",
-  "players": ["0001", "0003", "0004"],
-  "winner": "0003"
-},{
-  "id": "0007",
-  "gameName": "Colt Express",
-  "players": ["0001", "0003", "0004", "0002"],
-  "winner": "0003"
-}];
-
 
 
 const Content = React.createClass({
@@ -120,12 +42,24 @@ const Content = React.createClass({
   renderEvents() {
     const events = eventsList.map(event => {
       const displayEventUsers = this.renderEventPlayers(event).map(player => {
-        return `${player} `
+        return <li>
+          {player}
+        </li>
       });
-      return <div className="row">
-        <div className="name">{event.id} {event.gameName} -  Winner: {this.renderWinner(event)}<br />
-          {displayEventUsers}
+      return <div className="row event-card">
+        <div className="header">
+          <div className="image"></div>
+          <div className="info">
+            <div className="id">{event.id}</div>
+            <h2>{event.gameName}</h2>
+            <div className="date">Date: </div>
+          </div>
         </div>
+        <h3>Players:</h3>
+        <ul className="users">
+          {displayEventUsers}
+        </ul>
+        <div className="winner">Winner: <span className="name">{this.renderWinner(event)}</span></div>
       </div>
     });
     return events
@@ -153,58 +87,92 @@ const Content = React.createClass({
     return eventsPlayed;
   },
 
+  userNemesis(user) {
+    let didNotWin = [];
+    eventsList.map(event => {
+      if (event.players.includes(user.id) && (user.id != event.winner)) {
+        didNotWin.push(event);
+      }
+    });
+
+    const xs = didNotWin.map(val => {
+      return val.winner;
+    });
+
+    const counts = xs.reduce((a, b, i, array) => {
+      const find = _.find(a, ['winner', array[i]]);
+      if (find) {
+        find.count += 1;
+        return a;
+      } else {
+        return a.concat({winner: array[i], count: 1})
+      }
+    }, []);
+
+    const output = counts.reduce((acc,x) => {
+      if (acc.length === 0) {
+        acc.push(x)
+      } else if (acc[0].count < x.count) {
+        acc = [x];
+      } else if (acc[0].count === x.count) {
+        acc[0].count += 1;
+      }
+      return acc;
+    }, [])
+
+    console.log(output);
+
+    const final = usersList.map(usr => {
+      const d = output.map(d => {
+        if (usr.id === d.winner) {
+          return usr.name;
+        }
+      });
+      return d;
+    });
+
+    return final;
+  },
+
   // Get user's most successful event
   userBestEvent(user) {
 
     const list = this.userWins(user);
 
-    const mostWins = list.reduce((a, b, i, array) => {
-      let output = [];
-      if (array[i] === array[i-1]) {
-        output.push(array[i]);
+    const counts = list.reduce((a, b, i, array) => {
+      const find = _.find(a, ['name', array[i]]);
+      if (find) {
+        find.count += 1;
+        return a;
       } else {
-        output.push(array);
+        return a.concat({name: array[i], count: 1})
       }
-      const flattened = output.reduce((a, b) => {
-        return a.concat(b);
-      }, []);
+    }, []);
 
-      return flattened;
-    },[]);
-
-    return _.isEmpty(mostWins) ? "no wins yet" : mostWins;
-
-
-    // Original attempt with array like object
-    // Create object of events and tally of times played
-    // const counts = {};
-    // for (var i = 0; i < this.userWins(user).length; i++) {
-    //   var num = this.userWins(user)[i];
-    //   counts[num] = counts[num] ? counts[num] + 1 : 1;
-    // }
-
-    // // Filter events to only show the most played (showing multiples if it's a tie)
-    // const topEvents = counts;
-
-    // // Get the name of the event(s)
-    // const namedEvents = [];
-    // Object.keys(topEvents).forEach(val => {
-    //   namedEvents.push(val);
-    // });
-
-
-    // Attempt with Ethel
-    // const counts = this.userWins(user).reduce((a, b, i, array) => {
-    //   const find = _.find(a, ['name', array[i]]);
-    //   if (find) {
-    //     find.count += 1;
-    //     return a;
-    //   } else {
-    //     return a.concat({name: array[i], count: 1})
+    // const counts = list.reduce((acc,x,i) => {
+    //   if (acc.length === 0) {
+    //     acc.push({name: "", count: 0})
     //   }
+    //   if (acc[i].name === x) {
+    //     acc[i].count += 1;
+    //   } else {
+    //     acc.push({name: x, count: 1})
+    //   }
+    //   return acc;
     // }, []);
 
+    const output = counts.reduce((acc,x) => {
+      if (acc.length === 0) {
+        acc.push(x)
+      } else if (acc[0].count < x.count) {
+        acc = [x];
+      } else if (acc[0].count === x.count) {
+        acc.push(x);
+      }
+      return acc;
+    }, [])
 
+    return output;
   },
 
   // Calculate percentage win ratio of a user
@@ -214,9 +182,27 @@ const Content = React.createClass({
 
   // Render a user's stats
   renderUser(user) {
-    return <div className="row">
-      {user.name} - Won {this.userWins(user).length} of {this.userEvents(user).length} ({this.userWinRatio(user)}%)<br />
-      Most wins: {this.userBestEvent(user)}
+    let games = this.userBestEvent(user).map(val => {
+      return <span className="games">
+        {val.name} <span className="count">({val.count})</span>
+      </span>;
+    });
+    if (this.userBestEvent(user).length === 0) {
+      games = "No wins yet"
+    }
+    // const nemesis = this.userNemesis(user).map(val => {
+    //   return <span className="item">
+    //     {val.id} <span className="count">({val.count})</span>
+    //   </span>;
+    // });
+    return <div className="row user-card">
+      <div className="info">
+        <h2 className="name">{user.name}</h2>
+        <div className="win-ratio">{this.userWinRatio(user)}%</div>
+        <div className="wins">Won: {this.userWins(user).length} of {this.userEvents(user).length}</div>
+        <div className="most-wins">Most wins in: {games}</div>
+        <div className="nemesis">Nemesis: {this.userNemesis(user)}</div>
+      </div>
     </div>
   },
 
@@ -234,14 +220,11 @@ const Content = React.createClass({
 
   // Show me the money
   render() {
-
     return <div className="content">
       <div className="col">
-      <h3>Events</h3>
-      {this.renderEvents()}
+        {this.renderEvents()}
       </div>
       <div className="col">
-        <h3>Leaderboard</h3>
         {this.renderLeaderboard()}
       </div>
     </div>

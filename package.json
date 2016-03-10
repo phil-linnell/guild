@@ -2,7 +2,14 @@
   "name": "guild",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "gulp build && node app.js"
+  },
   "dependencies": {
-    "express": "4.13.3"
+    "express": "^4.12.3",
+    "browser-sync": "^2.4.0",
+    "gulp": "^3.8.11",
+    "gulp-stylus": "^2.0.1",
+    "nib": "^1.1.0"
   }
 }
