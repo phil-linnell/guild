@@ -36,17 +36,34 @@ const eventsList = [{
   "gameName": "Dominant Species",
   "players": ["0001", "0003", "0004", "0005", "0006", "0007"],
   "winner": "0001"
+},{
+  "id": "0004",
+  "gameName": "Jamaica",
+  "players": ["0001", "0003", "0004", "0005", "0006", "0007"],
+  "winner": "0007"
 }];
 
 
 
 /*
-Phil, Amphibians 100
-Ben, Insects 81
-Kyle, Birds 80
-Dom, Arachnids 75
-Kelv, Mammals 72
-Rob, Reptiles 49
+DS
+Phil, Amphibians, Blue 100
+Ben, Insects, green 81
+Kyle, Birds, yellow 80
+Dom, Arachnids, red 75
+Kelv, Mammals, white 72
+Rob, Reptiles, black 49
+*/
+
+
+/*
+Jam
+Rob, red, 40
+Phil, Green, 37
+Dom, Yellow, 15
+Kyle, pink 25
+Kelv, blue, 26
+Ben, black, 10
 */
 
 
