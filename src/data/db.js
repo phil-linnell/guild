@@ -26,7 +26,7 @@ const eventsList = [{
   "id": "0003",
   "gameName": "Splendor",
   "players": ["0004", "0002", "0003", "0001"],
-  "winner": "0002"
+  "winner": "0003"
 },{
   "id": "0004",
   "gameName": "Splendor",

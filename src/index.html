@@ -4,7 +4,7 @@
     <script src="../public/lib/JSXTransformer.js"></script>
     <script src="../public/lib/react.js"></script>
     <script src="../public/lib/lodash.min.js"></script>
-    <script src="data/db.js"></script>
+    <script src="data/db2.js"></script>
     <link rel="stylesheet" href="../public/stylesheets/styles.css">
   </head>
   <body>
@@ -120,8 +120,6 @@ const Content = React.createClass({
       return acc;
     }, [])
 
-    console.log(output);
-
     const final = usersList.map(usr => {
       const d = output.map(d => {
         if (usr.id === d.winner) {
@@ -149,18 +147,6 @@ const Content = React.createClass({
       }
     }, []);
 
-    // const counts = list.reduce((acc,x,i) => {
-    //   if (acc.length === 0) {
-    //     acc.push({name: "", count: 0})
-    //   }
-    //   if (acc[i].name === x) {
-    //     acc[i].count += 1;
-    //   } else {
-    //     acc.push({name: x, count: 1})
-    //   }
-    //   return acc;
-    // }, []);
-
     const output = counts.reduce((acc,x) => {
       if (acc.length === 0) {
         acc.push(x)
@@ -182,28 +168,25 @@ const Content = React.createClass({
 
   // Render a user's stats
   renderUser(user) {
-    let games = this.userBestEvent(user).map(val => {
-      return <span className="games">
-        {val.name} <span className="count">({val.count})</span>
-      </span>;
-    });
-    if (this.userBestEvent(user).length === 0) {
-      games = "No wins yet"
-    }
-    // const nemesis = this.userNemesis(user).map(val => {
-    //   return <span className="item">
-    //     {val.id} <span className="count">({val.count})</span>
-    //   </span>;
-    // });
-    return <div className="row user-card">
-      <div className="info">
-        <h2 className="name">{user.name}</h2>
-        <div className="win-ratio">{this.userWinRatio(user)}%</div>
-        <div className="wins">Won: {this.userWins(user).length} of {this.userEvents(user).length}</div>
-        <div className="most-wins">Most wins in: {games}</div>
-        <div className="nemesis">Nemesis: {this.userNemesis(user)}</div>
+    if (this.userEvents(user).length > 0) {
+      let games = this.userBestEvent(user).map(val => {
+        return <span className="games">
+          {val.name} <span className="count">({val.count})</span>
+        </span>;
+      });
+      if (this.userBestEvent(user).length === 0) {
+        games = "No wins yet"
+      }
+      return <div className="row user-card">
+        <div className="info">
+          <h2 className="name">{user.name}</h2>
+          <div className="win-ratio">{this.userWinRatio(user)}%</div>
+          <div className="wins">Won: {this.userWins(user).length} of {this.userEvents(user).length}</div>
+          <div className="most-wins">Most wins in: {games}</div>
+          <div className="nemesis">Nemesis: {this.userNemesis(user)}</div>
+        </div>
       </div>
-    </div>
+    }
   },
 
   // Render the users in order of users in descending order of win ratio
