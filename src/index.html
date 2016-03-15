@@ -19,33 +19,49 @@
 const Content = React.createClass({
 
   // Cross reference an event's winner id with all users to get the winner name
-  renderWinner(event) {
-    const winnerName = usersList.map(winner => {
-      if (winner.id === event.winner) {
-        return winner.name;
-      }
-    });
-    return winnerName;
-  },
+  // renderWinner(event) {
+  //   const winnerName = usersList.map(all => {
+  //     let players = event.players;
+  //     console.table(players)
+  //     if (winnerName.id === winners) {
+  //       return winnerName.name;
+  //     }
+  //   });
+  //   return winnerName;
+  // },
+  //
 
+  // Render array of objects that shows the users
+  // of the event that includes the player name
   renderEventPlayers(event) {
-    let eventPlayers = [];
-    usersList.map(user => {
-      if (event.players.includes(user.id)) {
-        eventPlayers.push(user.name);
-      }
+    // Change player ids with their equivalent user names
+    const getUserName = event.players.map(obj => {
+      const returnName = usersList.forEach(user => {
+        if (obj.id === user.id) {
+          obj.id = user.name;
+        }
+      });
+      return returnName;
     });
-    return eventPlayers;
+    console.table(event.players);
+    console.log(event)
+
+    const getWinner = event.players.reduce((acc,cur) => {
+
+    }, []);
+
+    const displayEventUsers = event.players.map(player => {
+      return <li>
+        {player.id} {player.points} {player.colour}
+      </li>
+    });
+
+    return displayEventUsers;
   },
 
   // Simply render all the events highlighting the winner
   renderEvents() {
     const events = eventsList.map(event => {
-      const displayEventUsers = this.renderEventPlayers(event).map(player => {
-        return <li>
-          {player}
-        </li>
-      });
       return <div className="row event-card">
         <div className="header">
           <div className="image"></div>
@@ -57,9 +73,9 @@ const Content = React.createClass({
         </div>
         <h3>Players:</h3>
         <ul className="users">
-          {displayEventUsers}
+          {this.renderEventPlayers(event)}
         </ul>
-        <div className="winner">Winner: <span className="name">{this.renderWinner(event)}</span></div>
+        <div className="winner">Winner: <span className="name"></span></div>
       </div>
     });
     return events
@@ -208,7 +224,6 @@ const Content = React.createClass({
         {this.renderEvents()}
       </div>
       <div className="col">
-        {this.renderLeaderboard()}
       </div>
     </div>
   }
