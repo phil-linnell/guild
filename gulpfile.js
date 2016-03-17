@@ -1,10 +1,40 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util');
+var source = require('vinyl-source-stream');
 
-var stylus      = require('gulp-stylus');
-var nib         = require('nib');
+var babelify = require('babelify');
+var browserify = require('browserify');
+var watchify = require('watchify');
+var reactify = require('reactify');
+
+var stylus = require('gulp-stylus');
+var nib = require('nib');
 
 var browserSync = require('browser-sync');
-var reload      = browserSync.reload;
+var reload = browserSync.reload;
+
+gulp.task('react', function() {
+  var bundler = watchify(browserify({
+    entries: ['./src/components/app/app.jsx'],
+    debug: true,
+    transform:  [reactify],
+    extensions: ['.jsx'],
+    cache: {},
+    packageCache: {},
+    fullPaths: false
+  }))
+  function build(file) {
+    if (file) gutil.log('Recompiling ' + file);
+    return bundler
+      .transform(babelify, {presets: ["es2015", "react"]})
+      .bundle()
+      .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+      .pipe(source('app.js'))
+      .pipe(gulp.dest('./public'));
+  }
+  build()
+  bundler.on('update', build)
+});
 
 
 gulp.task('browser-sync', function() {
@@ -28,7 +58,7 @@ gulp.task('css', function() {
 
 
 // Initial build
-gulp.task('build', ['css']);
+gulp.task('build', ['react', 'css']);
 
 // Watch
 gulp.task('watch', function() {
