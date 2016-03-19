@@ -1,0 +1,46 @@
+.event-players {
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #fff;
+    margin-bottom: 5px;
+  }
+
+  .winner {
+    border: 1px solid gold;
+  }
+
+  .name,
+  .points {
+    flex: 1;
+  }
+
+  .position {
+    font-size: 12px;
+  }
+
+  .name {
+    margin-left: 10px;
+  }
+
+  .colour {
+    align-self: flex-end;
+    content: "";
+    height: 20px;
+    width: 20px;
+    background: #ccc;
+  }
+
+  for name, color in playerColours {
+    .{name} .colour {
+      background-color: color;
+    }
+  }
+
+  .white .colour {
+    border: 1px solid #ccc;
+  }
+}

@@ -44,6 +44,7 @@ h3 {
   flex: 1;
 }
 .event-card .header {
+  position: relative;
   display: -webkit-box;
   display: -moz-box;
   display: -webkit-flex;
@@ -62,9 +63,16 @@ h3 {
   font-size: 12px;
   margin-bottom: 5px;
 }
+.event-card h3 {
+  margin-left: 10px;
+}
 .event-card .date {
   margin-top: 7px;
   font-size: 12px;
+}
+.event-card .type {
+  position: absolute;
+  bottom: 0;
 }
 .user-card .info {
   position: relative;
@@ -102,6 +110,12 @@ h3 {
   -ms-flex-pack: justify;
   -webkit-justify-content: space-between;
   justify-content: space-between;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
   padding: 10px;
   background: #fff;
   margin-bottom: 5px;
@@ -118,6 +132,12 @@ h3 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+.event-players .position {
+  font-size: 12px;
+}
+.event-players .name {
+  margin-left: 10px;
 }
 .event-players .colour {
   -webkit-align-self: flex-end;
