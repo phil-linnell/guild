@@ -123,7 +123,15 @@ h3 {
 .event-players .winner {
   border: 1px solid #ffd700;
 }
-.event-players .name,
+.event-players .name {
+  -webkit-box-flex: 2;
+  -moz-box-flex: 2;
+  -o-box-flex: 2;
+  box-flex: 2;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+}
 .event-players .points {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
@@ -135,6 +143,8 @@ h3 {
 }
 .event-players .position {
   font-size: 12px;
+  width: 30px;
+  text-align: center;
 }
 .event-players .name {
   margin-left: 10px;

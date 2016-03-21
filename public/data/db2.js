@@ -248,7 +248,7 @@ const eventsModified = eventsList.map(event => {
     });
     const winningPoints = getWinner(event.players);
     if (`${winningPoints}` === player.points) {
-      event.winner.push(player.name);
+      event.winner.push(player.id);
     }
     return returnName;
   });

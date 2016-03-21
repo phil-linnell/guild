@@ -9,9 +9,14 @@ function getOrdinal(n) {
   return n+(s[(v-20)%10]||s[v]||s[0]);
 }
 
-function getPosition(points, i) {
-  // If player points are the same as previous player points, return "="
-  return getOrdinal((i+1));
+let tempPoints = 0;
+function getPosition(stats, i) {
+  stats.position = getOrdinal((i+1));
+  if (stats.points === tempPoints) {
+    stats.position = " = ";
+  }
+  tempPoints = stats.points;
+  return stats.position;
 }
 
 function EventPlayers({event, type}) {
@@ -27,11 +32,12 @@ function EventPlayers({event, type}) {
     }
     const winningPoints = getWinner(event.players);
     const classes = classNames('event-player', player.colour, {
-      winner: event.winner.includes(player.name)
+      winner: event.winner.includes(player.id)
     });
     let faction = (player.faction) ? `(${player.faction})` : false;
+    const position = getPosition(player, i);
     return <li className={classes} key={player.id}>
-      <div className="position">{getPosition(player.points, i)}</div>
+      <div className="position">{position}</div>
       <div className="name">{player.name} {faction}</div>
       <div className="points">{playerResult}</div>
       <div className="colour"></div>

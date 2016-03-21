@@ -4,31 +4,30 @@ var React = require('react');
 var classNames = require('classnames');
 
 function isNotWinner(user) {
-  return event => !event.winner.includes(user.name);
+  return event => !event.winner.includes(user.id);
 }
 
 function nemesisCount(counts, user) {
-  const find = _.find(counts, ['name', user]);
+  const find = _.find(counts, ['id', user]);
 
   if (find) {
     find.count += 1;
     return counts;
   }
 
-  return counts.concat({name: user, count: 1})
-
+  return counts.concat({id: user, count: 1})
 }
 
-function nemesisPicker(nemesii, nemesis) {
-    if (nemesii.length === 0) {
-      nemesii.push(nemesis)
-    } else if (nemesii[0].count < nemesis.count) {
-      nemesii = [nemesis];
-    } else if (nemesii[0].count === nemesis.count) {
-      nemesii.push(nemesis)
+function nemesisPicker(output, nemesis) {
+    if (output.length === 0) {
+      output.push(nemesis)
+    } else if (output[0].count < nemesis.count) {
+      output = [nemesis];
+    } else if (output[0].count === nemesis.count) {
+      output.push(nemesis)
     }
 
-    return nemesii;
+    return output;
 }
 
 // Experiment to merge the first filter and map of findNemesis
@@ -46,6 +45,7 @@ function findNemesis(user) {
                                 .map(({winner}) => winner)
                                 .reduce((a, b) => a.concat(b), [])
                                 .reduce(nemesisCount, []);
+
 
   const nemesii = counts.reduce(nemesisPicker, []);
 
