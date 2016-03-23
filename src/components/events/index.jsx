@@ -25,6 +25,7 @@ function Event() {
       </li>
     );
   });
+  
   return (
     <ul>
       {events}

@@ -231,9 +231,7 @@ const eventsList = [{
 }];
 
 function getWinner(array) {
-  return Math.max.apply(Math, array.map(player => {
-    return player.points;
-  }));
+  return Math.max.apply(Math, array.map(player => player.points));
 }
 
 
