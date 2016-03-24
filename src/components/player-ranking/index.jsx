@@ -2,9 +2,9 @@
 
 var React = require('react');
 
-function PlayerRanking(player, i, prevPoints) {
-  const ranking = getRanking(player.points, i + 1, prevPoints);
-  console.log(ranking)
+function PlayerRanking({player, index, players}) {
+  const prevPoints = (index == 0) ? 0 : players[index - 1].points;
+  const ranking = (player.points === prevPoints) ? "=" : getOrdinal(index + 1);
 
   return (
     <div className="ranking">{ranking}</div>
@@ -12,13 +12,10 @@ function PlayerRanking(player, i, prevPoints) {
 };
 
 function getOrdinal(n) {
-  var s = ["th", "st", "nd", "rd"];
-  var v = n % 100;
-  return n + (s[(v - 20) % 10] || s[v] || s[0]);
-}
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
 
-function getRanking(points, position, previousPoints) {
-  return (points === previousPoints) ? "=" : getOrdinal(position);
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
 module.exports = PlayerRanking;

@@ -10,6 +10,7 @@ function Event() {
   const events = eventsList.map(event => {
     const date = moment(event.date).format('Do MMMM YYYY');
     const eventType = _.capitalize(event.type);
+    
     return (
       <li className="row event-card" key={event.id}>
         <div className="header">
@@ -25,7 +26,7 @@ function Event() {
       </li>
     );
   });
-  
+
   return (
     <ul>
       {events}

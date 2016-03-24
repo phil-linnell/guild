@@ -234,6 +234,13 @@ function getWinner(array) {
   return Math.max.apply(Math, array.map(player => player.points));
 }
 
+function getNameFromId(playerId) {
+  return usersList.reduce((name, user) => {
+    return user.id === playerId ? name.concat(user.name) : name;
+  }, []);
+}
+
+
 
 const eventsModified = eventsList.map(event => {
   // Add player name to the event data

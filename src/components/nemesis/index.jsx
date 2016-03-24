@@ -3,6 +3,29 @@
 var React = require('react');
 var classNames = require('classnames');
 
+function Nemesis({user}) {
+  return (
+    <div className="nemesis">
+      Nemesis: {findNemesis(user)}
+    </div>
+  );
+}
+
+function findNemesis(user) {
+  const counts = user.events.filter(isNotWinner(user))
+                                .map(({winner}) => winner)
+                                .reduce((a, b) => a.concat(b), [])
+                                .reduce(nemesisCount, []);
+
+  const allNemeses = counts.reduce(nemesisPicker, []);
+
+  if (allNemeses.length === 0) {
+    return "Won everything";
+  }
+
+  return allNemeses.map(nemesis => `${getNameFromId(nemesis.id)} (${nemesis.count}) `);
+}
+
 function isNotWinner(user) {
   return event => !event.winner.includes(user.id);
 }
@@ -28,40 +51,6 @@ function nemesisPicker(output, nemesis) {
     }
 
     return output;
-}
-
-// Experiment to merge the first filter and map of findNemesis
-// function filterMap(user) {
-//   return (acc, cur) => {
-//     if (!cur.winner.includes(user.name)) {
-//       acc.push(cur.winner)
-//     }
-//     return acc;
-//   }, []);
-// }
-
-function findNemesis(user) {
-  const counts = user.events.filter(isNotWinner(user))
-                                .map(({winner}) => winner)
-                                .reduce((a, b) => a.concat(b), [])
-                                .reduce(nemesisCount, []);
-
-
-  const nemesii = counts.reduce(nemesisPicker, []);
-
-  if (nemesii.length === 0) {
-    return "Won everything";
-  }
-
-  return nemesii.map(nemesis => `${nemesis.name} (${nemesis.count}) `);
-}
-
-function Nemesis({user}) {
-  return (
-    <div className="nemesis">
-      Nemesis: {findNemesis(user)}
-    </div>
-  );
 }
 
 module.exports = Nemesis;
