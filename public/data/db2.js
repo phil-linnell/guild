@@ -235,9 +235,7 @@ function getWinner(array) {
 }
 
 function getNameFromId(playerId) {
-  return usersList.reduce((name, user) => {
-    return user.id === playerId ? name.concat(user.name) : name;
-  }, []);
+  return usersList.find(user => user.id === playerId).name;
 }
 
 
