@@ -23,7 +23,7 @@ function EachEventPlayer(event, type) {
 
     // If faction, show it
     const faction = (player.faction) ? `(${player.faction})` : false;
-    
+
     // Show points or W/L
     let playerResult;
     playerResult = player.points;

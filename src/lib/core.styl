@@ -9,6 +9,7 @@ body {
   font-family: sans-serif;
   padding: 40px 30px;
   color: #333;
+  box-sizing: border-box;
 }
 h2 {
   font-size: 24px;
@@ -32,4 +33,42 @@ h3 {
 .col {
   padding: 0 10px;
   flex: 1;
+}
+
+input {
+  border: 1px solid #ccc;
+  height: 30px;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  form-item();
+}
+
+.add-button {
+  width: 100%;
+  border: none;
+  height: 30px;
+  background: #316484;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.form {
+  h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+
+    &:before {
+      display: inline-block;
+      content: "+"
+      font-size: 28px;
+      color: green;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+  }
 }

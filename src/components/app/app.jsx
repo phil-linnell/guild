@@ -10,7 +10,6 @@ const rootUrl = 'https://boardgames-guild.firebaseio.com/';
 const Events = require('../events');
 const User = require('../user');
 const NewUser = require('../new-user');
-const ListUsers = require('../list-users');
 const NewEvent = require('../new-event');
 
 const App = React.createClass({
@@ -26,6 +25,7 @@ const App = React.createClass({
     let fbUsers = new Firebase(rootUrl + 'users/');
     this.bindAsObject(fbUsers, 'users');
     fbUsers.on('value', this.handleUserDateLoaded);
+
     this.bindAsObject(new Firebase(rootUrl + 'events/'), 'events');
   },
   render() {
@@ -41,12 +41,11 @@ const App = React.createClass({
       <div className="content">
         <div className="col">
           <NewEvent eventsStore={this.firebaseRefs.events} usersData={usersArray} />
-          <Events />
+          <Events eventsData={eventsArray} usersData={usersArray} />
         </div>
         <div className="col">
           <NewUser usersStore={this.firebaseRefs.users} />
-          <ListUsers usersData={usersArray} loaded={this.state.loaded} />
-          <User />
+          <User usersData={usersArray} eventsData={eventsArray} loaded={this.state.loaded} />
         </div>
       </div>
     );
@@ -55,6 +54,9 @@ const App = React.createClass({
     this.setState({
       loaded: true
     })
+  },
+  getNameFromId(playerId) {
+    return usersArray.find(user => user.id === playerId).name;
   }
 });
 

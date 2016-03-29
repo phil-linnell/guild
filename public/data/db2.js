@@ -46,23 +46,6 @@ const eventsList = [{
   "date": "2016-03-01",
   "notes": ""
 },{
-  "id": "0002",
-  "gameName": "Test Game",
-  "type": "points",
-  "players": [{
-    "id": "0001",
-    "points": "30",
-    "colour": "red"
-  },{
-    "id": "0002",
-    "points": "30",
-    "colour": "white"
-  },{
-    "id": "0008",
-    "points": "26",
-    "colour": "blue"
-  }]
-},{
   "id": "0003",
   "gameName": "Dominant Species",
   "type": "points",
@@ -263,10 +246,10 @@ const eventsList = [{
 function getWinner(array) {
   return Math.max.apply(Math, array.map(player => player.points));
 }
-
-function getNameFromId(playerId) {
-  return usersList.find(user => user.id === playerId).name;
-}
+// 
+// function getNameFromId(playerId) {
+//   return usersList.find(user => user.id === playerId).name;
+// }
 
 
 
@@ -294,7 +277,6 @@ const eventsModified = eventsList.map(event => {
   return output
 });
 
-console.log(eventsList);
 
 const usersModified = usersList.map(user => {
   // Add each event and points to user data
@@ -320,7 +302,6 @@ const usersModified = usersList.map(user => {
   return returnEvents;
 });
 
-console.log(usersList)
 
 
 /*

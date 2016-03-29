@@ -11,7 +11,8 @@ const NewUser = React.createClass({
   },
   render() {
     return (
-      <div className="row">
+      <div className="row form">
+        <h2>Add new user</h2>
         <input
           value={this.state.name}
           onChange={this.handleInputChange}
@@ -20,7 +21,7 @@ const NewUser = React.createClass({
         <span className="input-group-btn">
           <button
             onClick={this.handleClick}
-            className="btn btn-default"
+            className="add-button"
             type="button">
             Add
           </button>

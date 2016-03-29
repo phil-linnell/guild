@@ -9,6 +9,9 @@ body {
   font-family: sans-serif;
   padding: 40px 30px;
   color: #333;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 h2 {
   font-size: 24px;
@@ -42,6 +45,42 @@ h3 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+input {
+  border: 1px solid #ccc;
+  height: 30px;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.add-button {
+  width: 100%;
+  border: none;
+  height: 30px;
+  background: #316484;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: 5px;
+  cursor: pointer;
+}
+.form h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+.form h2:before {
+  display: inline-block;
+  content: "+";
+  font-size: 28px;
+  color: #008000;
+  font-weight: bold;
+  margin-right: 10px;
 }
 .event-card .header {
   position: relative;
@@ -199,4 +238,453 @@ h3 {
   opacity: 1;
   -ms-filter: none;
   filter: none;
+}
+.new-players h3 {
+  margin-top: 7px;
+  margin-bottom: 5px;
+}
+.new-event-player {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+}
+.new-event-player .Select {
+  -webkit-box-flex: 2;
+  -moz-box-flex: 2;
+  -o-box-flex: 2;
+  box-flex: 2;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+}
+.new-event-player > input {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+.Select {
+  position: relative;
+}
+.Select.is-disabled > .Select-control {
+  background-color: #f9f9f9;
+}
+.Select.is-disabled > .Select-control:hover {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.Select.is-disabled .Select-arrow-zone {
+  cursor: default;
+  pointer-events: none;
+}
+.Select-control {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  cursor: default;
+  display: table;
+  height: 28px;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.Select-control:hover {
+  -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+}
+.is-searchable.is-open > .Select-control {
+  cursor: text;
+}
+.is-open > .Select-control {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background: #fff;
+  border-color: #b3b3b3 #ccc #d9d9d9;
+}
+.is-open > .Select-control > .Select-arrow {
+  border-color: transparent transparent #999;
+  border-width: 0 5px 5px;
+}
+.is-searchable.is-focused:not(.is-open) > .Select-control {
+  cursor: text;
+}
+.is-focused:not(.is-open) > .Select-control {
+  border-color: #007eff;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 0 3px rgba(0,126,255,0.1);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 0 3px rgba(0,126,255,0.1);
+}
+.Select-placeholder,
+:not(.Select--multi) > .Select-control .Select-value {
+  bottom: 0;
+  color: #aaa;
+  left: 0;
+  line-height: 28px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  max-width: 100%;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label,
+.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {
+  color: #333;
+}
+.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label,
+.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label {
+  cursor: pointer;
+  text-decoration: none;
+}
+.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,
+.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,
+.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus,
+.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus {
+  color: #007eff;
+  outline: none;
+  text-decoration: underline;
+}
+.Select-input {
+  height: 28px;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+.Select-input > input {
+  background: none transparent;
+  border: 0 none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  cursor: default;
+  display: inline-block;
+  font-family: inherit;
+  font-size: inherit;
+  height: 28px;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  -webkit-appearance: none;
+}
+.is-focused .Select-input > input {
+  cursor: text;
+}
+.has-value.is-pseudo-focused .Select-input {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.Select-control:not(.is-searchable) > .Select-input {
+  outline: none;
+}
+.Select-loading-zone {
+  cursor: pointer;
+  display: table-cell;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  width: 16px;
+}
+.Select-loading {
+  -webkit-animation: Select-animation-spin 400ms infinite linear;
+  -o-animation: Select-animation-spin 400ms infinite linear;
+  -webkit-animation: Select-animation-spin 400ms infinite linear;
+  -moz-animation: Select-animation-spin 400ms infinite linear;
+  -o-animation: Select-animation-spin 400ms infinite linear;
+  -ms-animation: Select-animation-spin 400ms infinite linear;
+  animation: Select-animation-spin 400ms infinite linear;
+  width: 16px;
+  height: 16px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  border-right-color: #333;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+.Select-clear-zone {
+  -webkit-animation: Select-animation-fadeIn 200ms;
+  -o-animation: Select-animation-fadeIn 200ms;
+  -webkit-animation: Select-animation-fadeIn 200ms;
+  -moz-animation: Select-animation-fadeIn 200ms;
+  -o-animation: Select-animation-fadeIn 200ms;
+  -ms-animation: Select-animation-fadeIn 200ms;
+  animation: Select-animation-fadeIn 200ms;
+  color: #999;
+  cursor: pointer;
+  display: table-cell;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  width: 17px;
+}
+.Select-clear-zone:hover {
+  color: #d0021b;
+}
+.Select-clear {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 1;
+}
+.Select--multi .Select-clear-zone {
+  width: 17px;
+}
+.Select-arrow-zone {
+  cursor: pointer;
+  display: table-cell;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  width: 25px;
+  padding-right: 5px;
+}
+.Select-arrow {
+  border-color: #999 transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 2.5px;
+  display: inline-block;
+  height: 0;
+  width: 0;
+}
+.is-open .Select-arrow,
+.Select-arrow-zone:hover > .Select-arrow {
+  border-top-color: #666;
+}
+@-webkit-keyframes Select-animation-fadeIn {
+  from {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+  }
+  to {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+}
+.Select-menu-outer {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top-color: #e6e6e6;
+  -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-top: -1px;
+  max-height: 200px;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 1;
+  -webkit-overflow-scrolling: touch;
+}
+.Select-menu {
+  max-height: 198px;
+  overflow-y: auto;
+}
+.Select-option {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #666;
+  cursor: pointer;
+  display: block;
+  padding: 8px 10px;
+}
+.Select-option:last-child {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.Select-option.is-focused {
+  background-color: rgba(0,126,255,0.08);
+  color: #333;
+}
+.Select-option.is-disabled {
+  color: #ccc;
+  cursor: default;
+}
+.Select-noresults {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #999;
+  cursor: default;
+  display: block;
+  padding: 8px 10px;
+}
+.Select--multi .Select-input {
+  vertical-align: middle;
+  margin-left: 10px;
+  padding: 0;
+}
+.Select--multi.has-value .Select-input {
+  margin-left: 5px;
+}
+.Select--multi .Select-value {
+  background-color: rgba(0,126,255,0.08);
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  border: 1px solid rgba(0,126,255,0.24);
+  color: #007eff;
+  display: inline-block;
+  margin-left: 5px;
+  margin-top: 5px;
+  vertical-align: top;
+}
+.Select--multi .Select-value-icon,
+.Select--multi .Select-value-label {
+  display: inline-block;
+  vertical-align: middle;
+}
+.Select--multi .Select-value-label {
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  cursor: default;
+  padding: 2px 5px;
+}
+.Select--multi a.Select-value-label {
+  color: #007eff;
+  cursor: pointer;
+  text-decoration: none;
+}
+.Select--multi a.Select-value-label:hover {
+  text-decoration: underline;
+}
+.Select--multi .Select-value-icon {
+  cursor: pointer;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+  border-right: 1px solid rgba(0,126,255,0.24);
+  padding: 1px 5px 3px;
+}
+.Select--multi .Select-value-icon:hover,
+.Select--multi .Select-value-icon:focus {
+  background-color: rgba(0,113,230,0.08);
+  color: #0071e6;
+}
+.Select--multi .Select-value-icon:active {
+  background-color: rgba(0,126,255,0.24);
+}
+.Select--multi.is-disabled .Select-value {
+  background-color: #fcfcfc;
+  border: 1px solid #e3e3e3;
+  color: #333;
+}
+.Select--multi.is-disabled .Select-value-icon {
+  cursor: not-allowed;
+  border-right: 1px solid #e3e3e3;
+}
+.Select--multi.is-disabled .Select-value-icon:hover,
+.Select--multi.is-disabled .Select-value-icon:focus,
+.Select--multi.is-disabled .Select-value-icon:active {
+  background-color: #fcfcfc;
+}
+@-webkit-keyframes Select-animation-spin {
+  to {
+    -webkit-transform: rotate(1turn);
+  }
+}
+@-moz-keyframes Select-animation-fadeIn {
+  from {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+  }
+  to {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+}
+@-webkit-keyframes Select-animation-fadeIn {
+  from {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+  }
+  to {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+}
+@-o-keyframes Select-animation-fadeIn {
+  from {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+  }
+  to {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+}
+@keyframes Select-animation-fadeIn {
+  from {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+  }
+  to {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+}
+@-moz-keyframes Select-animation-spin {
+  to {
+    -webkit-transform: rotate(1turn);
+    -moz-transform: rotate(1turn);
+    -o-transform: rotate(1turn);
+    -ms-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+@-webkit-keyframes Select-animation-spin {
+  to {
+    -webkit-transform: rotate(1turn);
+    -moz-transform: rotate(1turn);
+    -o-transform: rotate(1turn);
+    -ms-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+@-o-keyframes Select-animation-spin {
+  to {
+    -webkit-transform: rotate(1turn);
+    -moz-transform: rotate(1turn);
+    -o-transform: rotate(1turn);
+    -ms-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+@keyframes Select-animation-spin {
+  to {
+    -webkit-transform: rotate(1turn);
+    -moz-transform: rotate(1turn);
+    -o-transform: rotate(1turn);
+    -ms-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
 }
