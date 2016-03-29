@@ -13,6 +13,7 @@
     "browserify": "^13.0.0",
     "classnames": "^2.2.3",
     "express": "^4.12.3",
+    "firebase": "^2.4.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.0",
@@ -23,6 +24,7 @@
     "nib": "^1.1.0",
     "react": "^0.14.0",
     "react-dom": "^0.14.7",
+    "reactfire": "^0.4.0",
     "reactify": "^1.1.1",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"

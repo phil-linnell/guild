@@ -228,6 +228,36 @@ const eventsList = [{
   }],
   "date": "2016-03-11",
   "notes": "Some notes about the game"
+},{
+  "id": "0008",
+  "gameName": "Evolution",
+  "type": "points",
+  "players": [{
+    "id": "0001",
+    "points": "75",
+    "faction": "Swarma nom-nom"
+  },{
+    "id": "0002",
+    "points": "71",
+    "faction": "Smarti caw-caw"
+  }],
+  "date": "2016-03-25",
+  "notes": "Some notes about the game"
+},{
+  "id": "0009",
+  "gameName": "The Castles of Burgundy",
+  "type": "points",
+  "players": [{
+    "id": "0001",
+    "points": "152",
+    "colour": "green"
+  },{
+    "id": "0002",
+    "points": "188",
+    "colour": "blue"
+  }],
+  "date": "2016-03-25",
+  "notes": "Some notes about the game"
 }];
 
 function getWinner(array) {

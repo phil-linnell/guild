@@ -10,7 +10,7 @@ function User({event}) {
     // TODO: Extract the whole wins, no. of events and winratio into a component
     let totalGamesWon = 0;
     const totalGamesPlayed = user.events.map(userEvent => {
-      if (userEvent.winner.includes(user.name)) {
+      if (userEvent.winner.includes(user.id)) {
         totalGamesWon += 1;
       }
       return `${userEvent.gameName}, `

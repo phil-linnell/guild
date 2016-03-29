@@ -185,3 +185,18 @@ h3 {
 .event-players .white .colour {
   border: 1px solid #ccc;
 }
+.list-users {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -webkit-transition: opacity 0.32s ease-in;
+  -moz-transition: opacity 0.32s ease-in;
+  -o-transition: opacity 0.32s ease-in;
+  -ms-transition: opacity 0.32s ease-in;
+  transition: opacity 0.32s ease-in;
+}
+.list-users.loaded {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
