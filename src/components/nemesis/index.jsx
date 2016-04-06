@@ -3,15 +3,15 @@
 var React = require('react');
 var classNames = require('classnames');
 
-function Nemesis({user}) {
+function Nemesis({user, usersData}) {
   return (
     <div className="nemesis">
-      Nemesis: {findNemesis(user)}
+      Nemesis: {findNemesis(user, usersData)}
     </div>
   );
 }
 
-function findNemesis(user) {
+function findNemesis(user, usersData) {
   const counts = user.events.filter(isNotWinner(user))
                                 .map(({winner}) => winner)
                                 .reduce((a, b) => a.concat(b), [])
@@ -23,7 +23,7 @@ function findNemesis(user) {
     return "Won everything";
   }
 
-  return allNemeses.map(nemesis => `${getNameFromId(nemesis.id)} (${nemesis.count}) `);
+  return allNemeses.map(nemesis => `${usersData.find(user => user.id === nemesis.id).name} (${nemesis.count}) `);
 }
 
 function isNotWinner(user) {
@@ -42,15 +42,15 @@ function nemesisCount(counts, user) {
 }
 
 function nemesisPicker(output, nemesis) {
-    if (output.length === 0) {
-      output.push(nemesis)
-    } else if (output[0].count < nemesis.count) {
-      output = [nemesis];
-    } else if (output[0].count === nemesis.count) {
-      output.push(nemesis)
-    }
+  if (output.length === 0) {
+    output.push(nemesis)
+  } else if (output[0].count < nemesis.count) {
+    output = [nemesis];
+  } else if (output[0].count === nemesis.count) {
+    output.push(nemesis)
+  }
 
-    return output;
+  return output;
 }
 
 module.exports = Nemesis;

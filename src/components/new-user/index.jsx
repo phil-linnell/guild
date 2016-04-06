@@ -23,7 +23,7 @@ const NewUser = React.createClass({
             onClick={this.handleClick}
             className="add-button"
             type="button">
-            Add
+            Save
           </button>
         </span>
       </div>

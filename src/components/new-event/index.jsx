@@ -1,33 +1,43 @@
 "use strict";
 
 var React = require('react');
+var LinkedStateMixin = require('react-addons/lib/LinkedStateMixin');
 const Select = require('react-select');
 
-const NewEventPlayer = require('../new-event-player');
-
 const NewEvent = React.createClass({
+  mixins: [LinkedStateMixin],
 
   getInitialState() {
-    let playersValues = [];
-    // for (let i = 0; i < 3; i++) {
-    //   playersValues.push({
-    //     name: '',
-    //     points: ''
-    //   })
-    // }
     return {
+      noOfPlayers: 2,
       name: '',
       date: '',
       players: [{
         id: '',
         points: '',
-        colour: ''
+        colour: '',
+        faction: ''
       },{
         id: '',
         points: '',
-        colour: ''
+        colour: '',
+        faction: ''
       }]
     }
+  },
+  addEmptyPlayer() {
+    this.state.players.concat({
+      id: '',
+      points: '',
+      colour: '',
+      faction: ''
+    })
+  },
+  genericLink() {
+    return (
+      faction: this.state.players[i].faction,
+      requestChange: this.handlePlayerFactionChange.bind(null, i)
+    );
   },
   addPlayers() {
     const usersData = this.props.usersData;
@@ -45,6 +55,10 @@ const NewEvent = React.createClass({
       let colourLink = {
         colour: this.state.players[i].colour,
         requestChange: this.handlePlayerColourChange.bind(null, i)
+      }
+      let factionLink = {
+        faction: this.state.players[i].faction,
+        requestChange: this.handlePlayerFactionChange.bind(null, i)
       }
       let selectName = `select-${i}`;
       playersInputs.push(
@@ -64,6 +78,10 @@ const NewEvent = React.createClass({
             valueLink={colourLink}
             type="text"
             placeholder="Colour" />
+          <input
+            valueLink={this.genericLink()}
+            type="text"
+            placeholder="Faction" />
         </div>
       )
     }, this)}
@@ -86,12 +104,17 @@ const NewEvent = React.createClass({
         <div className="new-players">
           <h3>Players</h3>
           {this.addPlayers()}
+          <button
+            onClick={this.handleAddPlayer}
+            type="button">
+            Add
+          </button>
         </div>
         <button
           onClick={this.handleClick}
           type="button"
           className="add-button">
-          Add
+          Save
         </button>
       </div>
     );
@@ -106,6 +129,10 @@ const NewEvent = React.createClass({
   },
   handlePlayerColourChange(i, colour) {
     this.state.players[i].colour = colour
+    this.setState({ players: this.state.players })
+  },
+  handlePlayerFactionChange(i, faction) {
+    this.state.players[i].faction = faction
     this.setState({ players: this.state.players })
   },
   handleClick() {
@@ -128,7 +155,19 @@ const NewEvent = React.createClass({
       state[key] = e.target.value;
       this.setState(state);
     }.bind(this);
+  },
+  handleAddPlayer() {
+    this.setState({
+      noOfPlayers: this.state.noOfPlayers + 1,
+      players: this.state.players.concat({
+        id: '',
+        points: '',
+        colour: '',
+        faction: ''
+      })
+    })
   }
+
 });
 
 module.exports = NewEvent;

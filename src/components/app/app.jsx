@@ -8,9 +8,10 @@ const Firebase = require('firebase');
 const rootUrl = 'https://boardgames-guild.firebaseio.com/';
 
 const Events = require('../events');
-const User = require('../user');
+const Users = require('../users');
 const NewUser = require('../new-user');
 const NewEvent = require('../new-event');
+const TestInputs = require('../test-inputs');
 
 const App = React.createClass({
   mixins: [ ReactFire ],
@@ -24,7 +25,7 @@ const App = React.createClass({
   componentWillMount: function() {
     let fbUsers = new Firebase(rootUrl + 'users/');
     this.bindAsObject(fbUsers, 'users');
-    fbUsers.on('value', this.handleUserDateLoaded);
+    fbUsers.on('value', this.handleUserDataLoaded);
 
     this.bindAsObject(new Firebase(rootUrl + 'events/'), 'events');
   },
@@ -40,17 +41,18 @@ const App = React.createClass({
     return (
       <div className="content">
         <div className="col">
+          <TestInputs />
           <NewEvent eventsStore={this.firebaseRefs.events} usersData={usersArray} />
           <Events eventsData={eventsArray} usersData={usersArray} />
         </div>
         <div className="col">
           <NewUser usersStore={this.firebaseRefs.users} />
-          <User usersData={usersArray} eventsData={eventsArray} loaded={this.state.loaded} />
+          <Users usersData={usersArray} eventsData={eventsArray} loaded={this.state.loaded} />
         </div>
       </div>
     );
   },
-  handleUserDateLoaded() {
+  handleUserDataLoaded() {
     this.setState({
       loaded: true
     })
