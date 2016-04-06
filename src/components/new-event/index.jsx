@@ -11,9 +11,11 @@ const defaultStates = {
   name: '',
   date: '',
   players: [{
+    id:'',
     points: '',
     faction: ''
   }, {
+    id: '',
     points: '',
     faction: ''
   }]
@@ -52,11 +54,24 @@ const NewEvent = React.createClass({
     );
   },
   renderNewPlayers() {
+    const usersData = this.props.usersData;
+    // Make user data acceptable for Select component
+    usersData.map(user => {
+      user.label = user.name
+      user.value = user.id
+    });
+
     let playersInputs = [];
     {this.state.players.map((x, i) => {
       let selectName = `select-${i}`;
       playersInputs.push(
-        <div className="new-player" key={`player-${i}`}>
+        <div className="new-event-player" key={`player-${i}`}>
+          <Select
+            name={selectName}
+            className="type-name"
+            value={this.state.players[i].id}
+            options={usersData}
+            onChange={this.handlePlayerNameChange.bind(null, i)}/>
           <input
             type="text"
             placeholder="Points"
@@ -77,6 +92,10 @@ const NewEvent = React.createClass({
     return playersInputs;
   },
 
+  handlePlayerNameChange(i, id) {
+    this.state.players[i].id = id
+    this.setState({ players: this.state.players })
+  },
   handlePlayerInputChange(event) {
     this.state.players[event.target.tabIndex][event.target.name] = event.target.value
     this.setState({ players: this.state.players })
