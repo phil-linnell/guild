@@ -7,23 +7,39 @@ const rootUrl = 'https://boardgames-guild.firebaseio.com/';
 const Select = require('react-select');
 const NewEventPlayers = require('../new-event-players');
 
-const defaultStates = {
+let defaultStates = {
   name: '',
   date: '',
   players: [{
     id:'',
     points: '',
+    colour: '',
     faction: ''
-  }, {
-    id: '',
+  },{
+    id:'',
     points: '',
+    colour: '',
     faction: ''
   }]
 }
 
 const NewEvent = React.createClass({
   getInitialState() {
-    return defaultStates
+    return {
+      name: '',
+      date: '',
+      players: [{
+        id:'',
+        points: '',
+        colour: '',
+        faction: ''
+      },{
+        id:'',
+        points: '',
+        colour: '',
+        faction: ''
+      }]
+    }
   },
   render() {
     return (
@@ -43,6 +59,10 @@ const NewEvent = React.createClass({
             name="date"
             onChange={this.handleInputChange} />
           {this.renderNewPlayers()}
+          <button
+            onClick={this.handleAddPlayer}>
+            Add player
+          </button>
         </div>
         <button
           onClick={this.handleSaveEvent}
@@ -86,12 +106,30 @@ const NewEvent = React.createClass({
             name="faction"
             tabIndex={i}
             onChange={this.handlePlayerInputChange} />
+          <button
+            onClick={this.handleRemovePlayer.bind(null, i)}>
+            X
+          </button>
         </div>
       )
     }, this)}
     return playersInputs;
   },
 
+  handleRemovePlayer(i) {
+    console.log(i);
+    this.state.players.splice(i, 1);
+    this.setState({ players: this.state.players })
+  },
+  handleAddPlayer() {
+    this.state.players = this.state.players.concat({
+      id:'',
+      points: '',
+      colour: '',
+      faction: ''
+    });
+    this.setState({ players: this.state.players })
+  },
   handlePlayerNameChange(i, id) {
     this.state.players[i].id = id
     this.setState({ players: this.state.players })
@@ -112,42 +150,22 @@ const NewEvent = React.createClass({
       date: this.state.date,
       players: this.state.players
     })
-    this.setState(defaultStates);
+    this.setState({
+      name: '',
+      date: '',
+      players: [{
+        id:'',
+        points: '',
+        colour: '',
+        faction: ''
+      },{
+        id:'',
+        points: '',
+        colour: '',
+        faction: ''
+      }]
+    });
   }
 });
 
 module.exports = NewEvent;
-
-
-// handleSaveEvent() {
-//   this.props.eventsStore.push({
-//     name: this.state.name,
-//     date: this.state.date,
-//     id: Date.now(),
-//     players: this.state.players
-//   })
-//
-//   this.setState({
-//     name: '',
-//     date: '',
-//     players: []
-//   })
-// },
-// handleChange(key) {
-//   return function (e) {
-//     let state = {};
-//     state[key] = e.target.value;
-//     this.setState(state);
-//   }.bind(this);
-// },
-// handleAddPlayer() {
-//   this.setState({
-//     noOfPlayers: this.state.noOfPlayers + 1,
-//     players: this.state.players.concat({
-//       id: '',
-//       points: '',
-//       colour: '',
-//       faction: ''
-//     })
-//   })
-// }
