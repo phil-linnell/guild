@@ -17,7 +17,7 @@ const Event = React.createClass({
     const eventType = _.capitalize(event.type);
 
     return (
-      <li className="row event-card" key={event.key}>
+      <div className="card event-card" key={event.key}>
         <div className="header">
           <div className="image"></div>
           <div className="info">
@@ -26,14 +26,16 @@ const Event = React.createClass({
               onClick={this.handleDeleteEvent}>
               Delete
             </button>
-            <h2>{event.name}</h2>
+            <h1>{event.name}</h1>
             <div className="date">{date}</div>
             <div className="type">Type: {eventType}</div>
           </div>
         </div>
-        <h3>Players</h3>
+        <div className="players-header">
+          <h2>Players</h2>
+        </div>
         <EventPlayers event={event} type={event.type} />
-      </li>
+      </div>
     );
   },
   handleDeleteEvent() {

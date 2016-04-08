@@ -1,12 +1,12 @@
 "use strict";
 
-var React = require('react');
-var classNames = require('classnames');
+const React = require('react');
+const classNames = require('classnames');
 
-var Nemesis = require('../nemesis');
+const Nemesis = require('../nemesis');
 
 function Users({usersData, eventsData, loaded}) {
-  const classes = classNames('list-users', {
+  const classes = classNames('users-list', {
     loaded: loaded
   });
 
@@ -49,22 +49,22 @@ function Users({usersData, eventsData, loaded}) {
       renderNemesis = <Nemesis user={user} usersData={usersData} />
     }
     return (
-      <li className="row user-card" key={user.id}>
+      <div className="card user-card" key={user.id}>
         <div className="info">
           <h2 className="name">{user.name}</h2>
           <div className="win-ratio">{winRatio}</div>
-          <div className="wins">{totalGamesWon} of {totalGamesPlayed.length}</div>
+          <div className="wins">Won: {totalGamesWon} of {totalGamesPlayed.length}</div>
           {renderNemesis}
           <div className="all-games">All Games played: {totalGamesPlayed}</div>
         </div>
-      </li>
+      </div>
     );
   });
 
   return (
-    <ul className={classes}>
+    <div className={classes}>
       {output}
-    </ul>
+    </div>
   );
 }
 

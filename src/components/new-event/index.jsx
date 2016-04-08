@@ -2,26 +2,10 @@
 
 const React = require('react');
 const Firebase = require('firebase');
+const classNames = require('classnames');
 
 const rootUrl = 'https://boardgames-guild.firebaseio.com/';
 const Select = require('react-select');
-const NewEventPlayers = require('../new-event-players');
-
-let defaultStates = {
-  name: '',
-  date: '',
-  players: [{
-    id:'',
-    points: '',
-    colour: '',
-    faction: ''
-  },{
-    id:'',
-    points: '',
-    colour: '',
-    faction: ''
-  }]
-}
 
 const NewEvent = React.createClass({
   getInitialState() {
@@ -43,31 +27,37 @@ const NewEvent = React.createClass({
   },
   render() {
     return (
-      <div className="row form">
-        <h2>Add new event</h2>
-        <div className="new-players">
-          <input
-            type="text"
-            placeholder="Game name"
-            value={this.state.name}
-            name="name"
-            onChange={this.handleInputChange} />
-          <input
-            type="text"
-            placeholder="Date: 2016-03-25"
-            value={this.state.date}
-            name="date"
-            onChange={this.handleInputChange} />
-          {this.renderNewPlayers()}
+      <div className="new-event card">
+        <div className="header">
+          <div className="image"></div>
+          <div className="info">
+            <input
+              type="text"
+              placeholder="Game name"
+              value={this.state.name}
+              name="name"
+              onChange={this.handleInputChange} />
+            <input
+              type="text"
+              placeholder="Date: 2016-03-25"
+              value={this.state.date}
+              name="date"
+              onChange={this.handleInputChange} />
+          </div>
+        </div>
+        <div className="players-header">
+          <h2>Players</h2>
           <button
+            className="add-player"
             onClick={this.handleAddPlayer}>
             Add player
           </button>
         </div>
+        {this.renderNewPlayers()}
         <button
           onClick={this.handleSaveEvent}
           type="button"
-          className="add-button">
+          className="big-action-button">
           Save
         </button>
       </div>
@@ -91,6 +81,7 @@ const NewEvent = React.createClass({
             className="type-name"
             value={this.state.players[i].id}
             options={usersData}
+            placeholder="Name"
             onChange={this.handlePlayerNameChange.bind(null, i)}/>
           <input
             type="text"
@@ -101,14 +92,21 @@ const NewEvent = React.createClass({
             onChange={this.handlePlayerInputChange} />
           <input
             type="text"
+            placeholder="Colour"
+            value={this.state.players[i].colour}
+            name="colour"
+            tabIndex={i}
+            onChange={this.handlePlayerInputChange} />
+          <input
+            type="text"
             placeholder="Faction"
             value={this.state.players[i].faction}
             name="faction"
             tabIndex={i}
             onChange={this.handlePlayerInputChange} />
           <button
+            className="remove-player"
             onClick={this.handleRemovePlayer.bind(null, i)}>
-            X
           </button>
         </div>
       )

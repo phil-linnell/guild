@@ -25,9 +25,9 @@ const EventsList = React.createClass({
     children.reverse();
 
     return (
-      <ul>
+      <div className="event-list">
         {children}
-      </ul>
+      </div>
     );
   }
 });

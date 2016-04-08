@@ -7,10 +7,12 @@ const Firebase = require('firebase');
 
 const rootUrl = 'https://boardgames-guild.firebaseio.com/';
 
+const Tabs = require('react-simpletabs');
+
 const EventsList = require('../events-list');
 const Users = require('../users');
 const NewUser = require('../new-user');
-const NewEvent = require('../new-event');
+const ShowHideNewEvent = require('../show-hide-new-event');
 
 const App = React.createClass({
   mixins: [ ReactFire ],
@@ -63,17 +65,20 @@ const App = React.createClass({
 
     return (
       <div className="content">
-        <div className="col">
-          <NewEvent eventsStore={this.firebaseRefs.events} usersData={usersArray} />
-          <EventsList eventsData={rawEventData} usersData={usersArray} />
-        </div>
-        <div className="col">
-          <NewUser usersStore={this.firebaseRefs.users} />
-          <Users usersData={usersArray} eventsData={eventsArray} loaded={this.state.loaded} />
-        </div>
+        <Tabs>
+          <Tabs.Panel title="Events">
+            <ShowHideNewEvent eventsStore={this.firebaseRefs.events} usersData={usersArray} />
+            <EventsList eventsData={rawEventData} usersData={usersArray} />
+          </Tabs.Panel>
+          <Tabs.Panel title="Users">
+            <NewUser usersStore={this.firebaseRefs.users} />
+            <Users usersData={usersArray} eventsData={eventsArray} loaded={this.state.loaded} />
+          </Tabs.Panel>
+        </Tabs>
       </div>
     );
   },
+
   getWinner(array) {
     return Math.max.apply(Math, array.map(player => player.points));
   },

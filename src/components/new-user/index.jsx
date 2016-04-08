@@ -11,8 +11,8 @@ const NewUser = React.createClass({
   },
   render() {
     return (
-      <div className="row form">
-        <h2>Add new user</h2>
+      <div className="card form">
+        <h1>New user</h1>
         <input
           value={this.state.name}
           onChange={this.handleInputChange}
@@ -21,7 +21,7 @@ const NewUser = React.createClass({
         <span className="input-group-btn">
           <button
             onClick={this.handleClick}
-            className="add-button"
+            className="big-action-button"
             type="button">
             Save
           </button>
