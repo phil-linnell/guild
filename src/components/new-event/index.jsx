@@ -12,6 +12,7 @@ const NewEvent = React.createClass({
     return {
       name: '',
       date: '',
+      type: '',
       players: [{
         id:'',
         points: '',
@@ -42,6 +43,12 @@ const NewEvent = React.createClass({
               placeholder="Date: 2016-03-25"
               value={this.state.date}
               name="date"
+              onChange={this.handleInputChange} />
+            <input
+              type="text"
+              placeholder="Game type"
+              value={this.state.type}
+              name="type"
               onChange={this.handleInputChange} />
           </div>
         </div>
@@ -146,11 +153,13 @@ const NewEvent = React.createClass({
       name: this.state.name,
       id: Date.now(),
       date: this.state.date,
+      type: this.state.type,
       players: this.state.players
     })
     this.setState({
       name: '',
       date: '',
+      type: '',
       players: [{
         id:'',
         points: '',

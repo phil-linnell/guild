@@ -11,12 +11,12 @@ const NewUser = React.createClass({
   },
   render() {
     return (
-      <div className="card form">
-        <h1>New user</h1>
+      <div className="new-user card form">
         <input
           value={this.state.name}
           onChange={this.handleInputChange}
           type="text"
+          placeholder="New User"
           className="form-control" />
         <span className="input-group-btn">
           <button

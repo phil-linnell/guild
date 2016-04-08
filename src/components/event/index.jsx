@@ -21,11 +21,11 @@ const Event = React.createClass({
         <div className="header">
           <div className="image"></div>
           <div className="info">
-            <button
+            {/*<button
               className="delete-event"
               onClick={this.handleDeleteEvent}>
               Delete
-            </button>
+            </button>*/}
             <h1>{event.name}</h1>
             <div className="date">{date}</div>
             <div className="type">Type: {eventType}</div>
