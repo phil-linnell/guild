@@ -69,3 +69,33 @@ button {
   cursor: pointer;
   border-radius: 2px;
 }
+
+.dismiss {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  z-index: 100;
+  width: 14px;
+  height: @width;
+  padding: 5px;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    height: 10px;
+    width: 2px;
+    background: #aaa;
+    transform-origin: 50%;
+    pointer-events: none;
+  }
+  &:before {
+    transform: rotate(45deg);
+  }
+  &:after {
+    transform: rotate(-45deg);
+  }
+}

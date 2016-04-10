@@ -85,6 +85,46 @@ button {
   -webkit-border-radius: 2px;
   border-radius: 2px;
 }
+.dismiss {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  z-index: 100;
+  width: 14px;
+  height: 14px;
+  padding: 5px;
+}
+.dismiss:before,
+.dismiss:after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  height: 10px;
+  width: 2px;
+  background: #aaa;
+  -webkit-transform-origin: 50%;
+  -moz-transform-origin: 50%;
+  -o-transform-origin: 50%;
+  -ms-transform-origin: 50%;
+  transform-origin: 50%;
+  pointer-events: none;
+}
+.dismiss:before {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.dismiss:after {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
 .tabs {
   width: 600px;
 }
@@ -248,7 +288,7 @@ button {
 .remove-player:after {
   content: "";
   position: absolute;
-  top: 8px;
+  top: 10px;
   left: 14px;
   height: 13px;
   width: 3px;
@@ -762,55 +802,6 @@ button {
 }
 .event-players .white .colour {
   border: 1px solid #ccc;
-}
-.show-hide-new-event {
-  position: relative;
-}
-.show-hide-new-event .action-button.add-new-event {
-  margin-bottom: 20px;
-}
-.show-hide-new-event.showdismiss .dismiss {
-  display: block;
-}
-.show-hide-new-event .dismiss {
-  display: none;
-  position: absolute;
-  top: 60px;
-  right: 10px;
-  z-index: 100;
-  width: 14px;
-  height: 14px;
-  padding: 5px;
-}
-.show-hide-new-event .dismiss:before,
-.show-hide-new-event .dismiss:after {
-  content: "";
-  position: absolute;
-  top: 2px;
-  right: 5px;
-  height: 10px;
-  width: 2px;
-  background: #aaa;
-  -webkit-transform-origin: 50%;
-  -moz-transform-origin: 50%;
-  -o-transform-origin: 50%;
-  -ms-transform-origin: 50%;
-  transform-origin: 50%;
-  pointer-events: none;
-}
-.show-hide-new-event .dismiss:before {
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-.show-hide-new-event .dismiss:after {
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  transform: rotate(-45deg);
 }
 .users-list {
   opacity: 0;

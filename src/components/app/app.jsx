@@ -12,7 +12,7 @@ const Tabs = require('react-simpletabs');
 const EventsList = require('../events-list');
 const Users = require('../users');
 const NewUser = require('../new-user');
-const ShowHideNewEvent = require('../show-hide-new-event');
+const NewEvent = require('../new-event');
 
 const App = React.createClass({
   mixins: [ ReactFire ],
@@ -37,7 +37,11 @@ const App = React.createClass({
 
     const rawEventData = this.state.events;
     let eventsArray = [];
-    for (let event in rawEventData) {eventsArray.push(rawEventData[event])}
+    for (let key in rawEventData) {
+      const event = rawEventData[key]
+      event.key = key;
+      eventsArray.push(rawEventData[key])
+    }
 
     const eventsModified = eventsArray.map(event => {
       // Add player name to the event data
@@ -67,8 +71,8 @@ const App = React.createClass({
       <div className="content">
         <Tabs>
           <Tabs.Panel title="Events">
-            <ShowHideNewEvent eventsStore={this.firebaseRefs.events} usersData={usersArray} />
-            <EventsList eventsData={rawEventData} usersData={usersArray} />
+            <NewEvent eventsStore={this.firebaseRefs.events} usersData={usersArray} />
+            <EventsList eventsData={eventsArray} usersData={usersArray} />
           </Tabs.Panel>
           <Tabs.Panel title="Users">
             <NewUser usersStore={this.firebaseRefs.users} />

@@ -10,19 +10,15 @@ const EventsList = React.createClass({
   render() {
     const {eventsData, usersData} = this.props;
 
-    let children = [];
-    for(var key in this.props.eventsData) {
-      var event = this.props.eventsData[key];
-      event.key = key;
-      children.push(
+    const children = this.props.eventsData.map(event => {
+      return (
         <Event
           event={event}
-          key={key}
+          key={event.key}
           >
         </Event>
       )
-    }
-    children.reverse();
+    }).reverse();
 
     return (
       <div className="event-list">

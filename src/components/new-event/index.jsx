@@ -95,22 +95,19 @@ const NewEvent = React.createClass({
             placeholder="Points"
             value={this.state.players[i].points}
             name="points"
-            tabIndex={i}
-            onChange={this.handlePlayerInputChange} />
+            onChange={this.handlePlayerInputChange.bind(null, i)} />
           <input
             type="text"
             placeholder="Colour"
             value={this.state.players[i].colour}
             name="colour"
-            tabIndex={i}
-            onChange={this.handlePlayerInputChange} />
+            onChange={this.handlePlayerInputChange.bind(null, i)} />
           <input
             type="text"
             placeholder="Faction"
             value={this.state.players[i].faction}
             name="faction"
-            tabIndex={i}
-            onChange={this.handlePlayerInputChange} />
+            onChange={this.handlePlayerInputChange.bind(null, i)} />
           <button
             className="remove-player"
             onClick={this.handleRemovePlayer.bind(null, i)}>
@@ -122,7 +119,6 @@ const NewEvent = React.createClass({
   },
 
   handleRemovePlayer(i) {
-    console.log(i);
     this.state.players.splice(i, 1);
     this.setState({ players: this.state.players })
   },
@@ -139,8 +135,8 @@ const NewEvent = React.createClass({
     this.state.players[i].id = id
     this.setState({ players: this.state.players })
   },
-  handlePlayerInputChange(event) {
-    this.state.players[event.target.tabIndex][event.target.name] = event.target.value
+  handlePlayerInputChange(i, event) {
+    this.state.players[i][event.target.name] = event.target.value
     this.setState({ players: this.state.players })
   },
   handleInputChange(event) {
