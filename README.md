@@ -1,2 +1,5 @@
-# The Guild
-## App to keep a record of players and statistics of board game plays
+# The Boardgame Guild
+
+Create users and record boardgame 'events'. Stats stats stats.
+
+```$ npm start```
