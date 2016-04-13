@@ -7,7 +7,6 @@ import ReactDOM from 'react-dom';
 import ReactFire, { bindAsObject } from 'reactfire';
 import Firebase from 'firebase';
 
-import {getWinner} from './lib/utils'
 import Tabs from './components/tabs';
 import UsersList from './components/users-list';
 import NewUser from './components/new-user';
@@ -70,30 +69,6 @@ const App = React.createClass({
       eventsArray.push(rawEventData[key])
     }
 
-    const eventsModified = eventsArray.map(event => {
-      // Add player name to the event data
-      event.winner = [];
-      const getName = event.players.map(player => {
-        const returnName = usersArray.forEach(user => {
-          if (player.id === user.id) {
-            player.name = user.name;
-          }
-        });
-        const winningPoints = getWinner(event.players);
-        if (`${winningPoints}` === player.points) {
-          event.winner.push(player.id);
-        }
-        return returnName;
-      });
-
-      // Re-order according to points value
-      const output = event.players.sort((a, b) => {
-        return b.points - a.points
-      });
-
-      return output
-    });
-
     return (
       <div className="content">
         <Tabs tabs={tabList} currentTab={this.state.currentTab} changeTab={this.changeTab} />
@@ -115,10 +90,6 @@ const App = React.createClass({
     this.setState({
       loaded: true
     })
-  },
-
-  getNameFromId(playerId) {
-    return usersArray.find(user => user.id === playerId).name;
   }
 
 });
