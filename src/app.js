@@ -7,12 +7,32 @@ import ReactDOM from 'react-dom';
 import ReactFire, { bindAsObject } from 'reactfire';
 import Firebase from 'firebase';
 
+import {getWinner} from './lib/utils'
+import Tabs from './components/tabs';
 import UsersList from './components/users-list';
 import NewUser from './components/new-user';
 import EventsList from './components/events-list';
 import NewEvent from './components/new-event';
 
 const rootUrl = 'https://boardgames-guild.firebaseio.com/';
+
+const tabList = [{
+  id: 1,
+  name: "Events",
+  url: "/events"
+},{
+  id: 2,
+  name: "Users",
+  url: "/users"
+},{
+  id: 3,
+  name: "New Event",
+  url: "/new-event"
+},{
+  id: 4,
+  name: "New User",
+  url: "/new-user"
+}]
 
 // Not updated to ES6 'class App extends Component' as
 // there is a conflict with 'mixins: [ReactFire]'
@@ -22,6 +42,7 @@ const App = React.createClass({
 
   getInitialState() {
     return {
+      currentTab: 1,
       loaded: false,
       users: {},
       events: {}
@@ -75,6 +96,7 @@ const App = React.createClass({
 
     return (
       <div className="content">
+        <Tabs tabs={tabList} currentTab={this.state.currentTab} changeTab={this.changeTab} />
         <NewEvent eventsStore={this.firebaseRefs.events} usersData={usersArray} />
         <EventsList eventsData={eventsArray} usersData={usersArray} />
         <NewUser usersStore={this.firebaseRefs.users} />
@@ -83,8 +105,10 @@ const App = React.createClass({
     );
   },
 
-  getWinner(array) {
-    return Math.max.apply(Math, array.map(player => player.points));
+  changeTab(tab) {
+    this.setState({
+      currentTab: tab.id
+    })
   },
 
   handleUserDataLoaded() {

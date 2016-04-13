@@ -5,6 +5,7 @@ import './users-list';
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
+import {getWinner} from '../../lib/utils'
 import Nemesis from '../nemesis';
 
 function UsersList({usersData, eventsData, loaded}) {
@@ -69,7 +70,7 @@ function UsersList({usersData, eventsData, loaded}) {
       {output}
     </div>
   );
-  
+
 }
 
 module.exports = UsersList;
