@@ -1,6 +1,5 @@
 .new-event {
 
-
 }
 
 .new-event-player {
@@ -28,21 +27,26 @@
 
 .add-player {
   height: 24px;
-  line-height: @height;
+  line-height: 24px;
   cursor: pointer;
   font-size: 12px;
-  color: guild.highlight;
+  color: var(--guild-highlight);
 
   &:before {
-    plus-icon(guild.highlight);
+    display: inline-block;
+    content: "+";
+    font-size: 24px;
+    color: var(--guild-highlight);
+    font-weight: bold;
+    transform: translateY(1px);
     margin-right: 5px;
   }
 }
 
 .remove-player {
   position: relative;
-  height: row-height;
-  width: @height;
+  height: var(--row-height);
+  width: var(--row-height);
   margin-left: 10px;
 
   &:before,
@@ -53,7 +57,7 @@
     left: 14px;
     height: 13px;
     width: 3px;
-    background: guild.delete;
+    background: var(--guild-delete);
     transform-origin: 50%;
   }
   &:before {
@@ -61,9 +65,6 @@
   }
   &:after {
     transform: rotate(-45deg);
-  }
-  &:hover {
-    // background-color: rgba(guild.delete, .1)
   }
 }
 
@@ -93,14 +94,20 @@
   color: #333;
   cursor: default;
   display: table;
-  height: row-height - 2px;
+  height: calc(var(--row-height) - 2px);
   outline: none;
   overflow: hidden;
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  form-item();
   cursor: text;
+
+  /* Mixin? */
+  font-size: 13px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  color: #333;
 }
 
 .is-searchable.is-open > .Select-control {
@@ -118,16 +125,18 @@
 .is-searchable.is-focused:not(.is-open) > .Select-control {
   cursor: text;
 }
-// .is-focused:not(.is-open) > .Select-control {
-//   border-color: #007eff;
-//   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
-// }
+
+/* .is-focused:not(.is-open) > .Select-control {
+   border-color: #007eff;
+   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
+ }*/
+
 .Select-placeholder,
 :not(.Select--multi) > .Select-control .Select-value {
   bottom: 0;
   color: #aaa;
   left: 0;
-  line-height: row-height - 2px;
+  line-height: calc(var(--row-height) - 2px);
   padding-left: 10px;
   padding-right: 10px;
   position: absolute;
@@ -152,16 +161,16 @@
   cursor: pointer;
   text-decoration: none;
 }
-// .has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,
-// .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,
-// .has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus,
-// .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus {
-//   color: #007eff;
-//   outline: none;
-//   text-decoration: underline;
-// }
+/*.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,
+.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,
+.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus,
+.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus {
+  color: #007eff;
+  outline: none;
+  text-decoration: underline;
+}*/
 .Select-input {
-  height: row-height - 2px;
+  height: calc(var(--row-height) - 2px);
   padding-left: 10px;
   padding-right: 10px;
   vertical-align: middle;
@@ -174,7 +183,7 @@
   display: inline-block;
   font-family: inherit;
   font-size: inherit;
-  height: row-height - 2px;
+  height: calc(var(--row-height) - 2px);
   margin: 0;
   outline: none;
   padding: 0;
@@ -366,14 +375,14 @@
   border-right: 1px solid rgba(0, 126, 255, 0.24);
   padding: 1px 5px 3px;
 }
-// .Select--multi .Select-value-icon:hover,
-// .Select--multi .Select-value-icon:focus {
-//   background-color: rgba(0, 113, 230, 0.08);
-//   color: #0071e6;
-// }
-// .Select--multi .Select-value-icon:active {
-//   background-color: rgba(0, 126, 255, 0.24);
-// }
+/*.Select--multi .Select-value-icon:hover,
+.Select--multi .Select-value-icon:focus {
+  background-color: rgba(0, 113, 230, 0.08);
+  color: #0071e6;
+}
+.Select--multi .Select-value-icon:active {
+  background-color: rgba(0, 126, 255, 0.24);
+}*/
 .Select--multi.is-disabled .Select-value {
   background-color: #fcfcfc;
   border: 1px solid #e3e3e3;

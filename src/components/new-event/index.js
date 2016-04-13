@@ -1,15 +1,20 @@
 "use strict";
 
-const React = require('react');
-const Firebase = require('firebase');
-const classNames = require('classnames');
+import './new-event';
+
+import React, { Component } from 'react';
+import Firebase from 'firebase';
+import classNames from 'classnames';
+import Select from 'react-select';
 
 const rootUrl = 'https://boardgames-guild.firebaseio.com/';
-const Select = require('react-select');
 
-const NewEvent = React.createClass({
-  getInitialState() {
-    return {
+class NewEvent extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
       name: '',
       date: '',
       type: '',
@@ -24,9 +29,12 @@ const NewEvent = React.createClass({
         colour: '',
         faction: ''
       }]
-    }
-  },
+    };
+  }
+
   render() {
+    const { name, date, type } = this.props;
+
     return (
       <div className="new-event card">
         <div className="header">
@@ -35,21 +43,21 @@ const NewEvent = React.createClass({
             <input
               type="text"
               placeholder="Game name"
-              value={this.state.name}
+              value={name}
               name="name"
-              onChange={this.handleInputChange} />
+              onChange={this.handleInputChange.bind(this)} />
             <input
               type="text"
               placeholder="Date: 2016-03-25"
-              value={this.state.date}
+              value={date}
               name="date"
-              onChange={this.handleInputChange} />
+              onChange={this.handleInputChange.bind(this)} />
             <input
               type="text"
               placeholder="Game type"
-              value={this.state.type}
+              value={type}
               name="type"
-              onChange={this.handleInputChange} />
+              onChange={this.handleInputChange.bind(this)} />
           </div>
         </div>
         <div className="players-header">
@@ -62,14 +70,15 @@ const NewEvent = React.createClass({
         </div>
         {this.renderNewPlayers()}
         <button
-          onClick={this.handleSaveEvent}
+          onClick={this.handleSaveEvent.bind(this)}
           type="button"
           className="big-action-button">
           Save
         </button>
       </div>
     );
-  },
+  }
+
   renderNewPlayers() {
     const usersData = this.props.usersData;
     // Make user data acceptable for Select component
@@ -89,39 +98,40 @@ const NewEvent = React.createClass({
             value={this.state.players[i].id}
             options={usersData}
             placeholder="Name"
-            onChange={this.handlePlayerNameChange.bind(null, i)}/>
+            onChange={this.handlePlayerNameChange.bind(this, i)}/>
           <input
             type="text"
             placeholder="Points"
             value={this.state.players[i].points}
             name="points"
-            onChange={this.handlePlayerInputChange.bind(null, i)} />
+            onChange={this.handlePlayerInputChange.bind(this, i)} />
           <input
             type="text"
             placeholder="Colour"
             value={this.state.players[i].colour}
             name="colour"
-            onChange={this.handlePlayerInputChange.bind(null, i)} />
+            onChange={this.handlePlayerInputChange.bind(this, i)} />
           <input
             type="text"
             placeholder="Faction"
             value={this.state.players[i].faction}
             name="faction"
-            onChange={this.handlePlayerInputChange.bind(null, i)} />
+            onChange={this.handlePlayerInputChange.bind(this, i)} />
           <button
             className="remove-player"
-            onClick={this.handleRemovePlayer.bind(null, i)}>
+            onClick={this.handleRemovePlayer.bind(this, i)}>
           </button>
         </div>
       )
     }, this)}
     return playersInputs;
-  },
+  }
 
   handleRemovePlayer(i) {
     this.state.players.splice(i, 1);
     this.setState({ players: this.state.players })
-  },
+  }
+
   handleAddPlayer() {
     this.state.players = this.state.players.concat({
       id:'',
@@ -130,20 +140,24 @@ const NewEvent = React.createClass({
       faction: ''
     });
     this.setState({ players: this.state.players })
-  },
+  }
+
   handlePlayerNameChange(i, id) {
     this.state.players[i].id = id
     this.setState({ players: this.state.players })
-  },
+  }
+
   handlePlayerInputChange(i, event) {
     this.state.players[i][event.target.name] = event.target.value
     this.setState({ players: this.state.players })
-  },
+  }
+
   handleInputChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     })
-  },
+  }
+
   handleSaveEvent() {
     this.props.eventsStore.push({
       name: this.state.name,
@@ -169,6 +183,6 @@ const NewEvent = React.createClass({
       }]
     });
   }
-});
+};
 
-module.exports = NewEvent;
+export default NewEvent;

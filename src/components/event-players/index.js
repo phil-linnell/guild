@@ -1,11 +1,14 @@
 "use strict";
 
-var React = require('react');
-var classNames = require('classnames');
+import './event-players';
 
-var PlayerRanking = require('../player-ranking');
+import React, { Component } from 'react';
+import classNames from 'classnames';
 
-const EventPlayers = React.createClass({
+import PlayerRanking from '../player-ranking';
+
+class EventPlayers extends Component {
+
   render() {
     const {event, type} = this.props;
     const showAllEventPlayers = event.players.map(this.eachEventPlayer(event, type));
@@ -15,7 +18,8 @@ const EventPlayers = React.createClass({
         {showAllEventPlayers}
       </ul>
     );
-  },
+  }
+
   eachEventPlayer(event, type) {
     return (player, index, players) => {
       const classes = classNames('event-player', player.colour, {
@@ -42,6 +46,7 @@ const EventPlayers = React.createClass({
       );
     }
   }
-});
+  
+};
 
-module.exports = EventPlayers;
+export default EventPlayers;

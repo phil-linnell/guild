@@ -1,0 +1,17 @@
+:root {
+  --content-width: 600px;
+  --row-height: 36px;
+
+  --playerRed: red;
+  --playerBlue: blue;
+  --playerGreen: green;
+  --playerYellow: yellow;
+  --playerPink: pink;
+  --playerOrange: orange;
+  --playerBlack: black;
+  --playerWhite: white;
+
+  --guild-action: #316484;
+  --guild-highlight: #0b8855;
+  --guild-delete: #c01c3b;
+}

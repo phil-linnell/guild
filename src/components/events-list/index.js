@@ -1,12 +1,15 @@
 "use strict";
 
-const React = require('react');
-const ReactFire = require('reactfire');
-const Event = require('../event');
-const Firebase = require('firebase');
+import React, { Component } from 'react';
+import ReactFire from 'reactfire';
+import Firebase from 'firebase';
+
+import Event from '../event';
+
 const rootUrl = 'https://boardgames-guild.firebaseio.com/';
 
-const EventsList = React.createClass({
+class EventsList extends Component {
+
   render() {
     const {eventsData, usersData} = this.props;
 
@@ -26,6 +29,7 @@ const EventsList = React.createClass({
       </div>
     );
   }
-});
+  
+};
 
-module.exports = EventsList;
+export default EventsList;

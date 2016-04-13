@@ -1,26 +1,31 @@
 "use strict";
 
-var React = require('react');
+require('./new-user');
 
-const NewUser = React.createClass({
+import React, { Component } from 'react';
 
-  getInitialState() {
-    return {
+class NewUser extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
       name: ''
-    }
-  },
+    };
+  }
+
   render() {
     return (
       <div className="new-user card form">
         <input
           value={this.state.name}
-          onChange={this.handleInputChange}
+          onChange={this.handleInputChange.bind(this)}
           type="text"
           placeholder="New User"
           className="form-control" />
         <span className="input-group-btn">
           <button
-            onClick={this.handleClick}
+            onClick={this.handleClick.bind(this)}
             className="big-action-button"
             type="button">
             Save
@@ -28,7 +33,8 @@ const NewUser = React.createClass({
         </span>
       </div>
     );
-  },
+  }
+
   handleClick() {
     this.props.usersStore.push({
       name: this.state.name,
@@ -38,12 +44,14 @@ const NewUser = React.createClass({
     this.setState({
       name: ''
     })
-  },
+  }
+
   handleInputChange(event) {
     this.setState({
       name: event.target.value
     });
   }
-});
+  
+};
 
-module.exports = NewUser;
+export default NewUser;

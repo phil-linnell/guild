@@ -1,10 +1,10 @@
 "use strict";
 
-var React = require('react');
-var LinkedStateMixin = require('react-addons/lib/LinkedStateMixin');
-const Select = require('react-select');
+import React, { Component } from 'react';
+import LinkedStateMixin from 'react-addons/lib/LinkedStateMixin';
+import Select from 'react-select';
 
-const TestInputs = React.createClass({
+class TextInputs extends Component {
   getInitialState: function() {
     let value = this.props.value
     if (!value || value == '') {
@@ -54,6 +54,6 @@ const TestInputs = React.createClass({
       </div>
     )
   }
-});
+};
 
-module.exports = TestInputs;
+export default TestInputs;

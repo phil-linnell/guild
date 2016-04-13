@@ -1,11 +1,14 @@
 "use strict";
 
-const React = require('react');
-const classNames = require('classnames');
+import './users-list';
 
-const Nemesis = require('../nemesis');
+import React, { Component } from 'react';
+import classNames from 'classnames';
 
-function Users({usersData, eventsData, loaded}) {
+import Nemesis from '../nemesis';
+
+function UsersList({usersData, eventsData, loaded}) {
+
   const classes = classNames('users-list', {
     loaded: loaded
   });
@@ -66,6 +69,7 @@ function Users({usersData, eventsData, loaded}) {
       {output}
     </div>
   );
+  
 }
 
-module.exports = Users;
+module.exports = UsersList;

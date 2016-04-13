@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: row-height;
+    height: var(--row-height);
     background: #fff;
     margin-bottom: 10px;
   }
@@ -38,11 +38,20 @@
     background: #ccc;
   }
 
-  for name, color in playerColours {
+  .red .colour {background-color: var(--playerRed)}
+  .blue .colour {background-color: var(--playerBlue)}
+  .green .colour {background-color: var(--playerGreen)}
+  .yellow .colour {background-color: var(--playerYellow)}
+  .pink .colour {background-color: var(--playerPink)}
+  .orange .colour {background-color: var(--playerOrange)}
+  .black .colour {background-color: var(--playerBlack)}
+  .white .colour {background-color: var(--playerWhite)}
+
+  /*for name, color in playerColours {
     .{name} .colour {
       background-color: color;
     }
-  }
+  }*/
 
   .white .colour {
     border: 1px solid #ccc;

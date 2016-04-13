@@ -1,16 +1,20 @@
 "use strict";
 
-const React = require('react');
-const classNames = require('classnames');
-const moment = require('moment');
-const Firebase = require('firebase');
-const rootUrl = 'https://boardgames-guild.firebaseio.com/';
-const EventPlayers = require('../event-players');
+import React, { Component } from 'react';
+import classNames from 'classnames';
+import moment from 'moment';
+import Firebase from 'firebase';
 
-const Event = React.createClass({
+import EventPlayers from '../event-players';
+
+const rootUrl = 'https://boardgames-guild.firebaseio.com/';
+
+class Event extends Component {
+
   componentWillMount() {
     this.fb = new Firebase(rootUrl + 'events/' + this.props.event.key)
-  },
+  }
+
   render() {
     const {event} = this.props;
     const date = moment(event.date).format('Do MMMM YYYY');
@@ -23,7 +27,7 @@ const Event = React.createClass({
           <div className="info">
             {/*<button
               className="delete-event"
-              onClick={this.handleDeleteEvent}>
+              onClick={this.handleDeleteEvent.bind(this)}>
               Delete
             </button>*/}
             <h1>{event.name}</h1>
@@ -37,10 +41,12 @@ const Event = React.createClass({
         <EventPlayers event={event} type={event.type} />
       </div>
     );
-  },
-  handleDeleteEvent() {
-    this.fb.remove()
   }
-});
 
-module.exports = Event;
+  // handleDeleteEvent() {
+  //   this.fb.remove()
+  // }
+
+};
+
+export default Event;
