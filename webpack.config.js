@@ -32,12 +32,8 @@ module.exports = {
         loader: 'file?name=[name].[ext]'
       },
       {
-        test: /\.css$/,
-        loader: 'style!css!postcss?sourceMap',
-        include: PATHS.app
-      },
-      {
         test: /\.(js|jsx)$/,
+        include: PATHS.app,
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
@@ -47,36 +43,14 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.css']
+    extensions: ['', '.js', '.jsx']
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
-      }
-    }),
-    new webpack.HotModuleReplacementPlugin()
-  ],
-  postcss: [
-    autoprefixer({
-      browsers: ['last 2 versions']
-    }),
-    postcssNested,
-    postcssImport,
-    postcssCustomMedia
-  ],
-  devtool: 'eval-source-map',
-  devServer: {
-    historyApiFallback: true,
-    hot: true,
-    inline: true,
-    progress: true,
-    contentBase: PATHS.build
-  }
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false
+    //   }
+    // })
+  ]
 };

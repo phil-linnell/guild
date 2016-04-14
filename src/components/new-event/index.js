@@ -1,7 +1,5 @@
 "use strict";
 
-import './new-event';
-
 import React, { Component } from 'react';
 import Firebase from 'firebase';
 import classNames from 'classnames';

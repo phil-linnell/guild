@@ -1,6 +1,12 @@
-@import '../node_modules/normalize.css/normalize.css';
+@import '../node_modules/normalize.css';
 @import 'lib/variables';
 @import 'lib/core';
+
+@import 'components/event-players/event-players.css';
+@import 'components/new-event/new-event.css';
+@import 'components/new-user/new-user.css';
+@import 'components/tabs/tabs.css';
+@import 'components/users-list/users-list.css';
 
 #container {
   margin: 20px;

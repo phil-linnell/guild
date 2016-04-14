@@ -1,7 +1,5 @@
 "use strict";
 
-import './users-list';
-
 import React, { Component } from 'react';
 import classNames from 'classnames';
 

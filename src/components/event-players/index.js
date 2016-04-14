@@ -1,7 +1,5 @@
 "use strict";
 
-import './event-players';
-
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
@@ -46,7 +44,7 @@ class EventPlayers extends Component {
       );
     }
   }
-  
+
 };
 
 export default EventPlayers;

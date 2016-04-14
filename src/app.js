@@ -1,7 +1,5 @@
 "use strict";
 
-import './app.css';
-
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ReactFire, { bindAsObject } from 'reactfire';

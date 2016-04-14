@@ -1,7 +1,5 @@
 "use strict";
 
-require('./new-user');
-
 import React, { Component } from 'react';
 
 class NewUser extends Component {
@@ -51,7 +49,7 @@ class NewUser extends Component {
       name: event.target.value
     });
   }
-  
+
 };
 
 export default NewUser;

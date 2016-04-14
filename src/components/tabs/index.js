@@ -1,7 +1,5 @@
 "use strict";
 
-import './tabs';
-
 import React, { Component } from 'react';
 
 class Tabs extends Component {
