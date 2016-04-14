@@ -21,12 +21,12 @@ const tabList = [{
   url: "/events"
 },{
   id: 2,
-  name: "Users",
-  url: "/users"
-},{
-  id: 3,
   name: "New Event",
   url: "/new-event"
+},{
+  id: 3,
+  name: "Users",
+  url: "/users"
 },{
   id: 4,
   name: "New User",
@@ -72,10 +72,20 @@ const App = React.createClass({
     return (
       <div className="content">
         <Tabs tabs={tabList} currentTab={this.state.currentTab} changeTab={this.changeTab} />
-        <NewEvent eventsStore={this.firebaseRefs.events} usersData={usersArray} />
-        <EventsList eventsData={eventsArray} usersData={usersArray} />
-        <NewUser usersStore={this.firebaseRefs.users} />
-        <UsersList usersData={usersArray} eventsData={eventsArray} loaded={this.state.loaded} />
+        <div className="tab-content">
+          {this.state.currentTab === 1 ?
+            <EventsList eventsData={eventsArray} usersData={usersArray} />
+          : null}
+          {this.state.currentTab === 2 ?
+            <NewEvent eventsStore={this.firebaseRefs.events} usersData={usersArray} />
+          : null}
+          {this.state.currentTab === 3 ?
+            <UsersList usersData={usersArray} eventsData={eventsArray} loaded={this.state.loaded} />
+          : null}
+          {this.state.currentTab === 4 ?
+            <NewUser usersStore={this.firebaseRefs.users} />
+          : null}
+        </div>
       </div>
     );
   },

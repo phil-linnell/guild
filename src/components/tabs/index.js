@@ -1,16 +1,21 @@
 "use strict";
 
+import './tabs';
+
 import React, { Component } from 'react';
 
 class Tabs extends Component {
 
   render() {
     return (
-      <ul>
+      <ul className="tabs">
         {this.props.tabs.map(tab => {
           return (
-            <li key={tab.id} className={(this.props.currentTab === tab.id) ? 'current' : ''}>
-              <a onClick={this.handleClick.bind(this, tab)} href={tab.url}>{tab.name}</a>
+            <li
+              key={tab.id}
+              className={(this.props.currentTab === tab.id) ? 'current' : ''}
+              onClick={this.handleClick.bind(this, tab)}>
+              {tab.name}
             </li>
           );
         })}
@@ -18,8 +23,7 @@ class Tabs extends Component {
     );
   }
 
-  handleClick(tab, event) {
-    // event.preventDefault();
+  handleClick(tab) {
     this.props.changeTab(tab);
   }
 
