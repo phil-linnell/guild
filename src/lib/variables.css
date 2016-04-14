@@ -17,3 +17,5 @@
 
   --non-black: #222;
 }
+
+@custom-media --medium-window screen and (min-width: 480px);

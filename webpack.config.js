@@ -3,7 +3,7 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const postcssNested = require('postcss-nested');
 const postcssImport = require('postcss-import');
-// const postcssImport = require('postcss-import');
+const postcssCustomMedia = require('postcss-custom-media');
 
 const PATHS = {
   app: path.join(__dirname, './src'),
@@ -68,7 +68,8 @@ module.exports = {
       browsers: ['last 2 versions']
     }),
     postcssNested,
-    postcssImport
+    postcssImport,
+    postcssCustomMedia
   ],
   devtool: 'eval-source-map',
   devServer: {
