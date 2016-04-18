@@ -28,7 +28,7 @@ class Event extends Component {
   componentDidMount() {
     const { event } = this.props;
     if (event.bggId) {
-      const bggUrl = `http://bgg-api.herokuapp.com/api/v1/thing?id=${event.bggId}`
+      const bggUrl = `http://bgg-api.herokuapp.com/api/v1/thing?id=${event.bggId}&stats=1`
 
       $.ajax({
         url: bggUrl,
@@ -50,9 +50,15 @@ class Event extends Component {
     const date = moment(event.date).format('Do MMMM YYYY');
     const eventType = _.capitalize(event.type);
 
+    console.log(this.state.bggData)
+
     let imageUrl;
+    let bggRank;
+    let bggLink;
     if (this.state.loaded) {
       imageUrl = `http:${this.state.bggData.items.item[0].thumbnail[0]}`;
+      bggRank = this.state.bggData.items.item[0].statistics[0].ratings[0].ranks[0].rank[0].$.value;
+      bggLink = `https://boardgamegeek.com/boardgame/${this.state.bggData.items.item[0].$.id}/${_.kebabCase(this.state.bggData.items.item[0].name[0].$.value)}`
     }
 
     return (
@@ -67,7 +73,7 @@ class Event extends Component {
               onClick={this.handleDeleteEvent.bind(this)}>
               Delete
             </button>*/}
-            <h1>{event.name}</h1>
+            <h1>{event.name} <span className="bgg-rank">(<a href={bggLink}>BGG Rank: {bggRank}</a>)</span></h1>
             <div className="date">{date}</div>
             <div className="type">Type: {eventType}</div>
           </div>

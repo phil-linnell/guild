@@ -5,6 +5,14 @@ ul {
 li {
   list-style: none;
 }
+a {
+  color: var(--guild-action);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
 body {
   font-family: sans-serif;
   color: #333;
