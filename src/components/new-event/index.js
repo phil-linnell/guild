@@ -40,7 +40,7 @@ class NewEvent extends Component {
     if (!_.isEmpty(this.state.searchResults)) {
       if (this.state.searchResults.items.hasOwnProperty('item')) {
         let showResults = [];
-         this.state.searchResults.items.item.map(item => {
+        this.state.searchResults.items.item.map(item => {
           showResults.push(item);
         });
         return (
@@ -79,7 +79,7 @@ class NewEvent extends Component {
         searchTerm: event.target.value
       })
       this.searchResults();
-    }, 700);
+    }, 400);
   }
 
   searchResults() {
@@ -88,6 +88,7 @@ class NewEvent extends Component {
       dataType : "json",
       url: "http://bgg-api.herokuapp.com/api/v1/search",
       data:{
+        type: 'boardgame',
         query: this.state.searchTerm
       },
       success: result => this.setState({searchResults: result}),
