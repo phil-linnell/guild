@@ -70,7 +70,7 @@
   .info input {
     display: inline-block;
     margin-bottom: 10px;
-    max-width: 180px;
+    width: 180px;
     margin-right: 10px;
 
     &:last-of-type {

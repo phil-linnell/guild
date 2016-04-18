@@ -4,8 +4,11 @@ import React, { Component } from 'react';
 import Firebase from 'firebase';
 import classNames from 'classnames';
 import Select from 'react-select';
+import $ from 'jquery';
+import _ from 'lodash';
 
 const rootUrl = 'https://boardgames-guild.firebaseio.com/';
+const bggUrl = 'http://bgg-api.herokuapp.com/api/v1/search';
 
 class NewEvent extends Component {
 
@@ -13,7 +16,10 @@ class NewEvent extends Component {
     super(props);
 
     this.state = {
+      searchTerm: '',
+      searchResults: {},
       name: '',
+      bggId: '',
       date: '',
       type: '',
       players: [{
@@ -30,6 +36,65 @@ class NewEvent extends Component {
     };
   }
 
+  renderSearchResults() {
+    if (!_.isEmpty(this.state.searchResults)) {
+      if (this.state.searchResults.items.hasOwnProperty('item')) {
+        let showResults = [];
+         this.state.searchResults.items.item.map(item => {
+          showResults.push(item);
+        });
+        return (
+          <ul className="search-results">
+            {showResults.map(item => {
+              return (
+                <li
+                  onClick={this.handleChooseGame.bind(this, item)}
+                  key={item.$.id}>
+                  {item.name[0].$.value}
+                </li>
+              )
+            })}
+          </ul>
+        );
+      } else {
+        return (
+          <div className="search-results no-results">No results</div>
+        );
+      }
+    }
+  }
+
+  handleSearchName(event) {
+    event.persist();
+    this.setState({
+      searchResults: {},
+      name: event.target.value
+    });
+    this.delayedCallback(event);
+  }
+
+  componentWillMount() {
+    this.delayedCallback = _.debounce(event => {
+      this.setState({
+        searchTerm: event.target.value
+      })
+      this.searchResults();
+    }, 700);
+  }
+
+  searchResults() {
+    $.ajax({
+      method: "GET",
+      dataType : "json",
+      url: "http://bgg-api.herokuapp.com/api/v1/search",
+      data:{
+        query: this.state.searchTerm
+      },
+      success: result => this.setState({searchResults: result}),
+      error: result => console.log("Error" + result)
+    });
+  }
+
   render() {
     const { name, date, type } = this.props;
 
@@ -38,12 +103,15 @@ class NewEvent extends Component {
         <div className="header">
           <div className="image"></div>
           <div className="info">
-            <input
-              type="text"
-              placeholder="Game name"
-              value={name}
-              name="name"
-              onChange={this.handleInputChange.bind(this)} />
+            <div className="game">
+              <input
+                type="text"
+                placeholder="Game name"
+                value={this.state.name}
+                name="name"
+                onChange={this.handleSearchName.bind(this)} />
+              {this.renderSearchResults()}
+            </div>
             <input
               type="text"
               placeholder="Date: 2016-03-25"
@@ -125,6 +193,14 @@ class NewEvent extends Component {
     return playersInputs;
   }
 
+  handleChooseGame(item) {
+    this.setState({
+      name: item.name[0].$.value,
+      bggId: item.$.id,
+      searchResults: {}
+    });
+  }
+
   handleRemovePlayer(i) {
     this.state.players.splice(i, 1);
     this.setState({ players: this.state.players })
@@ -160,12 +236,14 @@ class NewEvent extends Component {
     this.props.eventsStore.push({
       name: this.state.name,
       id: Date.now(),
+      bggId: this.state.bggId,
       date: this.state.date,
       type: this.state.type,
       players: this.state.players
     })
     this.setState({
       name: '',
+      bggId: '',
       date: '',
       type: '',
       players: [{

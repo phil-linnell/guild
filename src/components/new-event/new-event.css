@@ -1,5 +1,39 @@
 .new-event {
+  .game {
+    position: relative;
+    width: 180px;
+    margin-bottom: 10px;
+  }
+  .search-results {
+    position: absolute;
+    top: 31px;
+    border: 1px solid #ddd;
+    font-size: 13px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: #fff;
+    z-index: 1;
+    box-sizing: border-box;
+    max-height: 100px;
+    overflow: scroll;
 
+    &.empty,
+    &.no-results {
+      padding: 10px;
+    }
+
+    li {
+      cursor: pointer;
+      padding-left: 10px;
+      padding-right: 10px;
+      line-height: 28px;
+
+      &:hover {
+        background-color: rgba(0, 126, 255, 0.08);
+      }
+    }
+  }
 }
 
 .new-event-player {
