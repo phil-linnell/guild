@@ -46,6 +46,7 @@ class NewEvent extends Component {
         return (
           <ul className="search-results">
             {showResults.map(item => {
+              console.log(`${item.name[0].$.value} - ${item.$.id}`)
               return (
                 <li
                   onClick={this.handleChooseGame.bind(this, item)}
