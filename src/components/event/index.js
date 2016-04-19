@@ -17,7 +17,8 @@ class Event extends Component {
 
     this.state = {
       bggData: {},
-      loaded: false
+      loaded: false,
+      editState: false
     }
   }
 
@@ -45,16 +46,12 @@ class Event extends Component {
     }
   }
 
-  render() {
+  renderEvent() {
     const { event } = this.props;
     const date = moment(event.date).format('Do MMMM YYYY');
     const eventType = _.capitalize(event.type);
 
-    console.log(this.state.bggData)
-
-    let imageUrl;
-    let bggRank;
-    let bggLink;
+    let imageUrl, bggRank, bggLink;
     if (this.state.loaded) {
       imageUrl = `http:${this.state.bggData.items.item[0].thumbnail[0]}`;
       bggRank = this.state.bggData.items.item[0].statistics[0].ratings[0].ranks[0].rank[0].$.value;
@@ -63,16 +60,16 @@ class Event extends Component {
 
     return (
       <div className="card event-card" key={event.key}>
+        <button
+          className="edit-event"
+          onClick={this.handleEditEvent.bind(this)}>
+          Edit
+        </button>
         <div className="header">
           <div className="image">
             <img src={imageUrl} />
           </div>
           <div className="info">
-            {/*<button
-              className="delete-event"
-              onClick={this.handleDeleteEvent.bind(this)}>
-              Delete
-            </button>*/}
             <h1>{event.name} <span className="bgg-rank">(<a href={bggLink}>BGG Rank: {bggRank}</a>)</span></h1>
             <div className="date">{date}</div>
             <div className="type">Type: {eventType}</div>
@@ -86,9 +83,51 @@ class Event extends Component {
     );
   }
 
-  // handleDeleteEvent() {
-  //   this.fb.remove()
-  // }
+  renderEditEvent() {
+    return (
+      <div className="card edit-event-card">
+        <button
+          className="delete-event"
+          onClick={this.handleDeleteEvent.bind(this)}>
+          Delete
+        </button>
+        <button
+          className="close"
+          onClick={this.handleSaveit.bind(this)}>
+          X
+        </button>
+      </div>
+    );
+  }
+
+  render() {
+    const classes = classNames('event', {
+      editable: this.state.editState
+    });
+
+    return (
+      <div className={classes}>
+        {this.renderEvent()}
+        {this.renderEditEvent()}
+      </div>
+    );
+  }
+
+  handleEditEvent() {
+    this.setState({
+      editState: true
+    });
+  }
+
+  handleSaveit() {
+    this.setState({
+      editState: false
+    });
+  }
+
+  handleDeleteEvent() {
+    this.fb.remove()
+  }
 
 };
 

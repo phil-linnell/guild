@@ -2,6 +2,7 @@
 @import 'lib/variables';
 @import 'lib/core';
 
+@import 'components/event/event.css';
 @import 'components/event-players/event-players.css';
 @import 'components/new-event/new-event.css';
 @import 'components/new-user/new-user.css';

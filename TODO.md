@@ -5,6 +5,7 @@
   * edit event
   * date input
   * mobile style
+  * occasions
 
 ## Refactor
 

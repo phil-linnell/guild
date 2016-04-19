@@ -1,0 +1,41 @@
+.event {
+  position: relative;
+
+  .event-card,
+  .edit-event-card {
+    backface-visibility: hidden;
+    transition: transform .5s ease-in-out;
+  }
+
+  .event-card {
+    transform: rotateY(0deg);
+  }
+
+  .edit-event-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transform: rotateY(180deg);
+  }
+
+  &.editable {
+
+    .event-card {
+      transform: rotateY(180deg);
+    }
+
+    .edit-event-card {
+      transform: rotateY(0deg);
+    }
+  }
+
+  .edit-event,
+  .close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 12px;
+  }
+}

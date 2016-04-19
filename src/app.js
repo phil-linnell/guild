@@ -25,10 +25,6 @@ const tabList = [{
   id: 3,
   name: "Users",
   url: "/users"
-},{
-  id: 4,
-  name: "New User",
-  url: "/new-user"
 }]
 
 // Not updated to ES6 'class App extends Component' as
@@ -78,10 +74,10 @@ const App = React.createClass({
             <NewEvent eventsStore={this.firebaseRefs.events} usersData={usersArray} />
           : null}
           {this.state.currentTab === 3 ?
-            <UsersList usersData={usersArray} eventsData={eventsArray} loaded={this.state.loaded} />
-          : null}
-          {this.state.currentTab === 4 ?
-            <NewUser usersStore={this.firebaseRefs.users} />
+            <div>
+              <NewUser usersStore={this.firebaseRefs.users} />
+              <UsersList usersData={usersArray} eventsData={eventsArray} loaded={this.state.loaded} />
+            </div>
           : null}
         </div>
       </div>

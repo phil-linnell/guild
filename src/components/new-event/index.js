@@ -23,12 +23,12 @@ class NewEvent extends Component {
       date: '',
       type: '',
       players: [{
-        id:'',
+        id: '',
         points: '',
         colour: '',
         faction: ''
       },{
-        id:'',
+        id: '',
         points: '',
         colour: '',
         faction: ''
@@ -249,12 +249,12 @@ class NewEvent extends Component {
       date: '',
       type: '',
       players: [{
-        id:'',
+        id: '',
         points: '',
         colour: '',
         faction: ''
       },{
-        id:'',
+        id: '',
         points: '',
         colour: '',
         faction: ''
