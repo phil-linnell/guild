@@ -20,6 +20,7 @@ class NewEvent extends Component {
       searchResults: {},
       name: '',
       bggId: '',
+      bggImage: '',
       date: '',
       type: '',
       players: [{
@@ -101,7 +102,7 @@ class NewEvent extends Component {
     return (
       <div className="new-event card">
         <div className="header">
-          <div className="image"></div>
+          <div className="image"><img src={this.state.bggImage} /></div>
           <div className="info">
             <div className="game">
               <input
@@ -194,6 +195,21 @@ class NewEvent extends Component {
   }
 
   handleChooseGame(item) {
+    console.log(item);
+
+    const bggUrl = `http://bgg-api.herokuapp.com/api/v1/thing?id=${item.$.id}&stats=1`
+    $.ajax({
+      url: bggUrl,
+      dataType: 'json',
+      cache: false,
+      success: data => {
+        this.setState({
+          bggImage: `http:${data.items.item[0].thumbnail[0]}`
+        });
+      },
+      error: (xhr, status, err) => console.error("error", status, err.toString())
+    });
+
     this.setState({
       name: item.name[0].$.value,
       bggId: item.$.id,
@@ -244,6 +260,7 @@ class NewEvent extends Component {
     this.setState({
       name: '',
       bggId: '',
+      bggImage: '',
       date: '',
       type: '',
       players: [{
