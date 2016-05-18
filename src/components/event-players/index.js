@@ -8,8 +8,8 @@ import PlayerRanking from '../player-ranking';
 class EventPlayers extends Component {
 
   render() {
-    const {event, type} = this.props;
-    const showAllEventPlayers = event.players.map(this.eachEventPlayer(event, type));
+    const {eventData, type} = this.props;
+    const showAllEventPlayers = eventData.players.map(this.eachEventPlayer(eventData, type));
 
     return (
       <ul className="event-players">

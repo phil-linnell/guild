@@ -7,6 +7,7 @@ import Firebase from 'firebase';
 import $ from 'jquery';
 
 import EventPlayers from '../event-players';
+import EditEvent from '../edit-event';
 
 const rootUrl = 'https://boardgames-guild.firebaseio.com/';
 
@@ -23,13 +24,13 @@ class Event extends Component {
   }
 
   componentWillMount() {
-    this.fb = new Firebase(rootUrl + 'events/' + this.props.event.key)
+    this.fb = new Firebase(rootUrl + 'events/' + this.props.eventData.key)
   }
 
   componentDidMount() {
-    const { event } = this.props;
-    if (event.bggId) {
-      const bggUrl = `http://bgg-api.herokuapp.com/api/v1/thing?id=${event.bggId}&stats=1`
+    const { eventData } = this.props;
+    if (eventData.bggId) {
+      const bggUrl = `http://bgg-api.herokuapp.com/api/v1/thing?id=${eventData.bggId}&stats=1`
 
       $.ajax({
         url: bggUrl,
@@ -47,9 +48,9 @@ class Event extends Component {
   }
 
   renderEvent() {
-    const { event } = this.props;
-    const date = moment(event.date).format('Do MMMM YYYY');
-    const eventType = _.capitalize(event.type);
+    const { eventData } = this.props;
+    const date = moment(eventData.date).format('Do MMMM YYYY');
+    const eventType = _.capitalize(eventData.type);
 
     let imageUrl, bggRank, bggLink;
     if (this.state.loaded) {
@@ -59,18 +60,17 @@ class Event extends Component {
     }
 
     return (
-      <div className="card event-card" key={event.key}>
+      <div className="card event-card" key={eventData.id}>
         <button
           className="edit-event"
           onClick={this.handleEditEvent.bind(this)}>
-          Edit
         </button>
         <div className="header">
           <div className="image">
             <img src={imageUrl} />
           </div>
           <div className="info">
-            <h1>{event.name} <span className="bgg-rank">(<a href={bggLink}>BGG Rank: {bggRank}</a>)</span></h1>
+            <h1>{eventData.name} <span className="bgg-rank">(<a href={bggLink}>BGG Rank: {bggRank}</a>)</span></h1>
             <div className="date">{date}</div>
             <div className="type">Type: {eventType}</div>
           </div>
@@ -78,7 +78,7 @@ class Event extends Component {
         <div className="players-header">
           <h2>Players</h2>
         </div>
-        <EventPlayers event={event} type={event.type} />
+        <EventPlayers eventData={eventData} type={eventData.type} />
       </div>
     );
   }
@@ -87,14 +87,14 @@ class Event extends Component {
     return (
       <div className="card edit-event-card">
         <button
-          className="delete-event"
-          onClick={this.handleDeleteEvent.bind(this)}>
-          Delete
-        </button>
-        <button
-          className="close"
+          className="close-edit-view"
           onClick={this.handleSaveit.bind(this)}>
-          X
+        </button>
+        <EditEvent eventData={this.props.eventData} usersData={this.props.users} />
+        <button
+          onClick={this.handleDeleteEvent.bind(this)}
+          className="big-action-button delete-event">
+          Delete
         </button>
       </div>
     );

@@ -10,29 +10,29 @@ import _ from 'lodash';
 const rootUrl = 'https://boardgames-guild.firebaseio.com/';
 const bggUrl = 'http://bgg-api.herokuapp.com/api/v1/search';
 
-class NewEvent extends Component {
+class EditEvent extends Component {
 
   constructor(props) {
     super(props);
 
+    let playersData = []
+    this.props.eventData.players.forEach((player, i) => {
+      playersData.push({
+        id: player.id,
+        points: player.points,
+        colour: player.colour,
+        faction: player.faction
+      })
+    })
+
     this.state = {
       searchTerm: '',
       searchResults: {},
-      name: '',
-      bggId: '',
-      date: '',
-      type: '',
-      players: [{
-        id: '',
-        points: '',
-        colour: '',
-        faction: ''
-      },{
-        id: '',
-        points: '',
-        colour: '',
-        faction: ''
-      }]
+      name: this.props.eventData.name,
+      bggId: this.props.eventData.bggId,
+      date: this.props.eventData.date,
+      type: this.props.eventData.type,
+      players: playersData
     };
   }
 
@@ -75,6 +75,7 @@ class NewEvent extends Component {
   }
 
   componentWillMount() {
+    this.fb = new Firebase(rootUrl + 'events/' + this.props.eventData.key);
     this.delayedCallback = _.debounce(event => {
       this.setState({
         searchTerm: event.target.value
@@ -98,6 +99,7 @@ class NewEvent extends Component {
   }
 
   render() {
+
     return (
       <div className="new-event card">
         <div className="header">
@@ -138,7 +140,7 @@ class NewEvent extends Component {
         <button
           onClick={this.handleSaveEvent.bind(this)}
           type="button"
-          className="big-action-button">
+          className="big-action-button save-edit">
           Save
         </button>
       </div>
@@ -233,32 +235,14 @@ class NewEvent extends Component {
   }
 
   handleSaveEvent() {
-    this.props.eventsStore.push({
+    this.fb.update({
       name: this.state.name,
-      id: Date.now(),
-      bggId: this.state.bggId,
       date: this.state.date,
       type: this.state.type,
-      players: this.state.players
-    })
-    this.setState({
-      name: '',
-      bggId: '',
-      date: '',
-      type: '',
-      players: [{
-        id: '',
-        points: '',
-        colour: '',
-        faction: ''
-      },{
-        id: '',
-        points: '',
-        colour: '',
-        faction: ''
-      }]
+      players: this.state.players,
+      bggId: this.state.bggId
     });
   }
 };
 
-export default NewEvent;
+export default EditEvent;

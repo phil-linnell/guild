@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import ReactFire from 'reactfire';
 import Firebase from 'firebase';
+import moment from 'moment';
 
 import { getWinner } from '../../lib/utils'
 import Event from '../event';
@@ -10,6 +11,15 @@ import Event from '../event';
 const rootUrl = 'https://boardgames-guild.firebaseio.com/';
 
 class EventsList extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dates: [],
+      selectedDate: 'all'
+    }
+  }
 
   render() {
     const {eventsData, usersData} = this.props;
@@ -38,21 +48,65 @@ class EventsList extends Component {
       return output
     });
 
-    const children = this.props.eventsData.map(event => {
+    const getEvents = this.props.eventsData.filter(value => {
+      if (this.state.selectedDate === 'all') {
+        return value;
+      }
+      return moment(this.state.selectedDate)._i === moment(value.date)._i;
+    });
+
+    const renderEventDetails = getEvents.map(event => {
+      console.log(event);
+
+      usersData.map(user => {
+
+        console.log(user);
+
+        // if user is in event give score and name
+
+      });
+    });
+
+    const renderEvents = getEvents.map(event => {
       return (
         <Event
-          event={event}
+          eventData={event}
           key={event.key}
-          >
-        </Event>
+          users={usersData} />
       )
     }).reverse();
 
     return (
-      <div className="event-list">
-        {children}
+      <div className="events-list">
+        {this.renderDateSelect()}
+        {renderEventDetails}
+        {renderEvents}
       </div>
     );
+  }
+
+  renderDateSelect() {
+    const datesSelect = this.props.eventsData.map(event => event.date)
+                            .filter((value, index, self) => self.indexOf(value) === index).reverse();
+
+    return (
+      <div className="dates-list">
+        <select onChange={this.selectDate.bind(this)} value={this.state.selectedDate}>
+          <option value="all" key="all">All</option>
+          {datesSelect.map(date => {
+            return (
+              <option value={date} key={date}>{moment(date).format('Do MMMM YYYY')}</option>
+            );
+          })}
+        </select>
+      </div>
+    );
+  }
+
+  selectDate(event) {
+    this.setState({
+      selectedDate: event.target.value
+    })
   }
 
 };

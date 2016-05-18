@@ -29,7 +29,8 @@ h2 {
   text-transform: uppercase;
 }
 
-input {
+input,
+select {
   height: var(--row-height);
   width: 100%;
   padding-left: 10px;
@@ -50,6 +51,7 @@ button {
   background: none;
   outline: 0;
   cursor: pointer;
+  padding: 0;
 }
 
 .big-action-button {

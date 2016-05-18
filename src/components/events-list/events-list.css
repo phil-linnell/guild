@@ -1,0 +1,10 @@
+.events-list {
+  .dates-list {
+    position: relative;
+    margin-bottom: 10px;
+
+    select {
+      max-width: 200px;
+    }
+  }
+}
